@@ -1,0 +1,157 @@
+/* styles.css */
+
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Light background for contrast */
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Column layout for small screens */
+    height: 100vh;
+}
+
+.map {
+    flex-grow: 1; /* Takes all available space */
+    position: relative;
+    min-height: 300px; /* Minimum height for the map */
+}
+
+.sidebar {
+    flex-shrink: 0; /* Sidebar does not shrink */
+    padding: 20px;
+    background-color: white;
+    border-top: 1px solid #ccc; /* Border at the top */
+    overflow-y: auto; /* Scrollable if content exceeds the height */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Responsive design for larger screens */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row; /* Row layout for larger screens */
+    }
+
+    .map {
+        flex-grow: 2; /* Takes 2/3 of the space */
+    }
+
+    .sidebar {
+        flex-grow: 1; /* Takes 1/3 of the space */
+    }
+}
+
+h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2rem; /* Adjusted to use rem for consistency */
+}
+
+/* Button styles */
+#updateButton, #calculer {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem; /* Consistent with rem */
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+#updateButton:hover, #calculer:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Input styles */
+.input {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    font-size: 1rem; /* Using rem for better scaling */
+}
+
+.short-input {
+    width: 100%;
+}
+
+.input:focus {
+    border-color: #007bff; /* Highlight on focus */
+    outline: none;
+}
+
+/* Label styles */
+label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 1rem; /* Consistent font size */
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    background-color: #f9f9f9;
+}
+
+.input-group {
+    margin-bottom: 12px;
+}
+
+.horizontal-list {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* Input container with additional spacing */
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+.temps-label {
+    margin-left: 10px;
+}
+
+/* Suggestions dropdown */
+#suggestions {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    position: absolute;
+    z-index: 1000;
+}
+
+#suggestions li {
+    padding: 8px;
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+    margin-bottom: 15px;
+}
+

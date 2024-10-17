@@ -1,27 +1,450 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang='fr'>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test GitHub Page</title>
+    <title>Ma zone de livraison</title>
+ <link rel="stylesheet" href="styles.css">
+
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://api.mapbox.com/mapbox-assembly/v0.21.0/assembly.min.css' rel='stylesheet'>
+    <script async defer src='https://api.mapbox.com/mapbox-assembly/v0.21.0/assembly.js'></script>
+    <link href='https://api.mapbox.com/mapbox-assembly/mapbox-addon/v0.3.0/assembly.min.css' rel='stylesheet'>
+    <script src='https://api.mapbox.com/mapbox-assembly/mapbox-addon/v0.3.0/assembly.js'></script>
+<!-- Inclure Mapbox Geocoder -->
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" />
+
+
     <style>
+        /* Styles généraux */
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light background for contrast */
         }
-        h1 {
-            font-size: 4em;
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .map {
+            flex: 2; /* Prend deux tiers de l'espace disponible */
+            position: relative;
+        }
+
+        .sidebar {
+            flex: 1; /* Prend un tiers de l'espace disponible */
+            padding: 20px;
+            background-color: white;
+            border-left: 1px solid #ccc;
+            overflow-y: auto; /* Permet le défilement si le contenu dépasse */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h3 {
             color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em; /* Réduit la taille de la police */
         }
+
+    /* Styles pour les boutons */
+#updateButton, #calculer {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px; /* Augmentation du padding pour rendre le bouton plus grand */
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    display: flex; /* Pour centrer le texte */
+    justify-content: center; /* Centrage horizontal */
+    align-items: center; /* Centrage vertical */
+    height: auto; /* Permet de s'ajuster au padding ou fixe une hauteur si besoin */
+}
+
+#updateButton:hover, #calculer:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Effet de survol */
+}
+        /* Style pour les champs d'entrée */
+        .input {
+            border: 1px solid #ccc;
+            padding: 8px; /* Réduit le padding */
+            border-radius: 5px;
+            width: 100%; /* Take full width */
+            margin-bottom: 12px;
+            box-sizing: border-box; /* Pour inclure le padding dans la largeur */
+            transition: border-color 0.3s;
+            font-size: 14px; /* Réduit la taille de la police */
+        }
+
+        .input:focus {
+            border-color: #007bff; /* Highlight on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        /* Styles pour les labels */
+        label {
+            font-weight: bold;
+            color: #555; /* Darker label color */
+            margin-bottom: 5px;
+            display: block; /* Ensures labels take full width */
+            font-size: 14px; /* Réduit la taille de la police */
+        }
+
+        /* Style pour les champs de sélection */
+        select {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%; /* Take full width */
+            margin-bottom: 12px;
+            background-color: white; /* Ensure white background */
+            color: #333; /* Dark text color for visibility */
+            font-size: 14px; /* Réduit la taille de la police */
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            border-color: #007bff; /* Highlight on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            background-color: #f9f9f9; /* Light background for fieldset */
+        }
+
+        /* Styles pour les icônes et le texte */
+        .sidebar-icons {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+
+        .sidebar-icons li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .icon-text {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        /* Liste horizontale */
+        .horizontal-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* Classes pour le cadre */
+        #cadre1, #cadre2, #cadre3, #cadre4 {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff; /* White background for cards */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        /* Result display styling */
+    #resultats {
+    margin-top: 15px;
+    padding: 5px; /* Espace à l'intérieur de la section */
+    border: 1px solid #007bff; /* Bordure bleue */
+    border-radius: 5px;
+    background-color: #e9f7ff; /* Fond bleu clair */
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.1); /* Ombre subtile */
+    max-width: 100%; /* Limite la largeur à 100% du parent */
+    width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+#resultats fieldset {
+    margin: 0 auto;
+    padding: 1px; /* Laissez un peu d'espace à l'intérieur */
+    max-width: 100%; /* Limite la largeur pour éviter le débordement */
+    box-sizing: border-box; /* Inclus le padding et les bordures dans la largeur totale */
+}
+
+        #resultats p {
+            margin: 5px 0; /* Spacing between result paragraphs */
+            font-size: 14px; /* Réduit la taille de la police */
+            color: #333; /* Dark text color for visibility */
+        }
+
+        #resultats strong {
+            color: #007bff; /* Highlighted color for strong text */
+        }
+
+
+.input-group {
+    display: flex; /* Aligne les éléments sur une ligne */
+    align-items: center; /* Centre verticalement */
+    justify-content: space-between; /* Espace entre le label et le container d'input */
+}
+
+.input-container {
+    display: flex; /* Aligne l'input et le span horizontalement */
+    align-items: center; /* Centre verticalement */
+}
+
+.temps-label {
+    margin-left: 5px; /* Espace entre l'input et le label de temps */
+    margin-right: 35px;
+    margin-top: 0; /* Ajuste la marge pour qu'elle soit plus proche du champ d'entrée */
+}
+
+.short-input {
+    width: 150px; /* Spécifiez la largeur que vous voulez */
+}
+
+
     </style>
 </head>
+
 <body>
-    <h1>Coucou</h1>
+    <div class='container'>
+        <div class='map' id='map'></div>
+        <div class='sidebar'>
+         
+           
+<label for="profile-select">Choisissez un profil :</label>
+<select id="profile-select">
+        <option value="driving-traffic">Conduite en temps réel</option>
+        <option value="driving">Conduite standard</option>
+</select>
+  <h3 class='txt-m txt-bold mb6'> Déplacez le marker</h3>
+ <p>Zone de livraison possible en minutes : <span id="timeDisplay">  </span>  </p>
+<!-- Champ pour définir la limite de temps en minutes -->
+            <input type="number" id="timelimit" min="1" max="60" value="15" class="input" placeholder="Limite de temps (min)" />
+<!-- Listbox pour les sites des marqueurs verts -->
+	<select id="siteSelect">
+    <option value="Sélectionnez un site">Sélectionnez un site</option>
+	<option value="Albi">Albi</option>
+	<option value="Carrière de Brens">Brens</option>
+	<option value="Gagnac">Gagnac</option>
+	<option value="Gradilles">Gradilles</option>
+	<option value="isle-sur-Tarn">isle-sur-Tarn</option>
+	<option value="Ondes">Ondes</option>
+	<option value="Paulinet">Paulinet</option>
+	<option value="Sablière de Lexos">Sablière de Lexos</option>
+	<option value="Verdun">Verdun</option>
+	<option value="Villeneuve-sur-Vère">Villeneuve-sur-Vère</option>
+</select>
+
+            <!-- Champ de recherche pour la ville
+<div id="cityInput" style="position: relative; width: 100%; max-width: 100%; margin: auto;"></div>-->
+       
+<!-- Champ de recherche pour la ville actif --> 
+ <div style="position: relative; width: 100%; max-width: 100%; margin: auto;">
+    <input type="text" id="cityInput" class="input" placeholder="Rechercher une ville" />
+    <ul id="suggestions" style="list-style-type: none; padding: 0; margin-top: 5px; position: absolute; z-index: 1000;"></ul>
+</div>
+
+
+ <!-- erreur -->
+<div id="error-message" style="color: red; display: none;"></div>
+
+
+
+  <div id="cadre1">
+                <label>Camions:</label>
+                <div class="horizontal-list">
+                    <label><input id="40t" name="poids" type="radio" checked="checked"> 40t</label>
+                    <label><input id="12t" name="poids" type="radio"> 12t</label>
+                    <label><input id="7.5t" name="poids" type="radio"> 7.5t</label>
+                    <label><input id="3.5t" name="poids" type="radio"> 3.5t</label>
+                </div>
+            </div>
+
+<div id="cadre2">
+    <div class="input-group">
+        <label for="quantite">Quantité (t/m³) :</label>
+        <input id="quantite" value="0" type="number" class="input short-input">
+    </div>
+    <div class="input-group">
+        <label for="tempsArret">Temps d'arrêt (min) :</label>
+        <input id="tempsArret" value="15" type="number" class="input short-input">
+    </div>
+    
+  <div class="input-group">
+        <label for="tempsTravail" class="bold">Heures de conduite (min) :</label>
+        <div class="input-container">
+      <span class="temps-label"> <span id="tempsTravailHeures"> </span> </span>
+            <input id="tempsTravail" value="480" type="number" class="input short-input" min="60" max="1440" placeholder="480 min">
+            
+        </div>
+    </div>
+
+  <div class="input-group">
+        <label for="prixTransport">Forfait transport :</label>
+        <input id="prixTransport" value="680" type="number" class="input short-input">
+    </div>
+
+
+</div>
+<!-- Bouton Envoyer -->
+<button id="updateButton">Envoyer</button>
+
+<div id="resultats" style="margin-bottom: 10px;">
+   
+        <legend>Résultats</legend>
+
+        <!-- Itinéraire -->
+        <p><strong>Itinéraire :</strong></p>
+        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <div style="flex: 1; display: flex; align-items: center;">
+                <label for="distance" style="flex: 0 0 120px;">Distance</label>
+                <input type="text" id="distance" class="input" style="flex: 1; margin-left: 5px;" readonly />
+            </div>
+            <div style="flex: 1; display: flex; align-items: center;">
+                <label for="time" style="flex: 0 0 100px;margin-left: 15px;">Temps</label>
+                <input type="text" id="time" class="input" style="flex: 1; margin-left: 1px;" readonly />
+            </div>
+        </div>
+
+        <!-- Tours -->
+        <p><strong>Tours :</strong></p>
+        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <div style="flex: 1; display: flex; align-items: center;">
+                <label for="numToursInt" style="flex: 0 0 120px;">Rotations</label>
+                <input type="text" id="numToursInt" class="input" style="flex: 1; margin-left: 5px;" readonly />
+            </div>
+            <div style="flex: 1; display: flex; align-items: center;">
+                <label for="numToursDecimal" style="flex: 0 0 100px;margin-left: 15px;">Max Tours</label>
+                <input type="text" id="numToursDecimal" class="input" style="flex: 1; margin-left: 1px;" readonly />
+            </div>
+        </div>
+
+   <!-- Prix -->
+<p><strong>Prix :</strong></p>
+<div style="display: flex; align-items: center;">
+    <div style="flex: 1; display: flex; align-items: center;">
+        <label for="coutParTonne" style="flex: 0 0 120px;">Coût (€/t)</label>
+        <input type="text" id="coutParTonne" class="input" style="flex: 1; margin-left: 5px;" readonly />
+    </div>
+    <div style="flex: 1; display: flex; align-items: center;">
+        <label for="couttoursAvecUnPlus" style="flex: 0 0 100px; margin-left: 15px;">Max (€/t)</label>
+        <input type="text" id="couttoursAvecUnPlus" class="input" style="flex: 1; margin-left: 1px;" readonly />
+    </div>
+</div>
+
+      <!-- Double Fret -->
+        <p><strong>Double Fret :</strong></p>
+     <div style="display: flex; align-items: center;">
+            <div style="flex: 1; display: flex; align-items: center;">
+                <label for="coutParTonneDoubleFret" style="flex: 0 0 120px;">Coût (€/t)</label>
+                <input type="text" id="coutParTonneDoubleFret" class="input" style="flex: 1; margin-left: 5px;" readonly />
+            </div>
+              <div style="flex: 1; display: flex; align-items: center;">
+                <label for="coutParTonneDoubleFretMax" style="flex: 0 0 100px; margin-left: 15px;">Max (€/t)</label>
+                <input type="text" id="coutParTonneDoubleFretMax" class="input" style="flex: 1; margin-left: 1px;" readonly />
+            </div>
+        </div>
+</div>
+
+
+  <fieldset>
+        <legend><i class="fas fa-exchange-alt"></i> Convertisseur</legend>
+        <div class="input-group">
+            <label for="tonnes">Tonnes:</label>
+            <input type="number" id="tonnes" class="input short-input" placeholder="Poids" oninput="convertir(event)" />
+        </div>
+        <div class="input-group">
+            <label for="densite">Densité:</label>
+            <input type="number" id="densite" class="input short-input" placeholder="Densité" value="2.2" onfocus="changeColor()" oninput="convertir(event)" />
+        </div>
+        <div class="input-group">
+            <label for="m3">m<sup>3</sup>:</label>
+            <input type="number" id="m3" class="input short-input" placeholder="Volume" oninput="convertir(event)" />
+        </div>
+    </fieldset>
+
+        </div>
+    </div>
+    <script src='./index.js' type="text/javascript"></script>
+
+     <script>
+        // Conversion de minutes en heures et minutes
+        const tempsTravailInput = document.getElementById('tempsTravail');
+        const tempsTravailHeures = document.getElementById('tempsTravailHeures');
+
+        tempsTravailInput.addEventListener('input', function() {
+            const minutes = parseInt(tempsTravailInput.value) || 0;
+            
+            const heures = Math.floor(minutes / 60); // Calculer les heures
+            const minutesRestantes = minutes % 60; // Calculer les minutes restantes
+            
+            tempsTravailHeures.textContent = `${heures}h ${minutesRestantes}min`; // Affichage au format "Xh Ymin"
+        });
+    </script>
+
+  <script>
+    function convertir(event) {
+        // Récupérer les champs
+        const tonnesInput = document.getElementById('tonnes');
+        const densiteInput = document.getElementById('densite');
+        const m3Input = document.getElementById('m3');
+
+        // Réinitialiser les valeurs uniquement pour les champs nécessaires
+        if (event && event.target.id === 'tonnes') {
+            m3Input.value = '';  // Réinitialiser le volume
+            var tonnes = parseFloat(tonnesInput.value);
+            var densite = parseFloat(densiteInput.value) || 0;
+
+            // Calculer le volume si la densité est valide
+            if (densite > 0) {
+                m3Input.value = (tonnes / densite).toFixed(2); // Calculer le volume
+            }
+        } else if (event && event.target.id === 'm3') {
+            tonnesInput.value = '';  // Réinitialiser les tonnes
+            var m3 = parseFloat(m3Input.value);
+            var densite = parseFloat(densiteInput.value) || 0;
+
+            // Calculer les tonnes si la densité est valide
+            if (densite > 0) {
+                tonnesInput.value = (m3 * densite).toFixed(2); // Calculer les tonnes
+            }
+        } else if (event && event.target.id === 'densite') {
+            var tonnes = parseFloat(tonnesInput.value);
+            var m3 = parseFloat(m3Input.value);
+
+            // Recalculer le volume ou les tonnes en fonction des autres champs
+            if (tonnes) {
+                m3Input.value = (tonnes / densiteInput.value).toFixed(2); // Recalculer le volume
+            } else if (m3) {
+                tonnesInput.value = (m3 * densiteInput.value).toFixed(2); // Recalculer les tonnes
+            }
+        }
+    }
+
+    // Changer la couleur lorsque le champ densité est en focus
+    function changeColor() {
+        document.getElementById('densite').style.backgroundColor = '#e0e0e0';
+    }
+
+    // Réinitialiser la couleur lorsque le champ densité perd le focus
+    document.getElementById('densite').addEventListener('blur', function() {
+        this.style.backgroundColor = '';
+    });
+    </script>
 </body>
 </html>
