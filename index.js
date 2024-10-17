@@ -346,7 +346,7 @@ const calculateDistanceAndTime = (origin, siteCoordinates) => {
                 document.getElementById("time").value = `${duration} minutes`;
 
              // Appeler la fonction pour afficher la route entre l'origine et le site
-                displayRoute(origin, siteCoordinates);
+             //   displayRoute(origin, siteCoordinates);
 
                 // Calculer le nombre de tours en fonction de la distance et du poids du véhicule
                 calculateTours(duration, isoAppData.params.vehicle_weight); // Passer la durée en minutes
