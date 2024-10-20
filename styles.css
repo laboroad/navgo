@@ -159,17 +159,21 @@ fieldset {
     }
 }
 
-/* Responsive design pour les plus grands écrans */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .container {
-        flex-direction: row; /* Layout en ligne pour les grands écrans */
+        flex-direction: column; /* Passer en colonne pour les petits écrans */
     }
 
     .map {
-        flex-grow: 2; /* La carte prend 2/3 de l'espace */
+        order: 2; /* La carte passe en second */
+        flex: 1;  /* La carte prend tout l'espace disponible */
+        height: 300px; /* Ajuster la hauteur de la carte sur mobile */
     }
 
     .sidebar {
-        flex-grow: 1; /* La sidebar prend 1/3 de l'espace */
+        order: 1; /* La sidebar passe en premier */
+        flex: 0 0 auto; /* Laisser la largeur auto pour la sidebar */
+        height: auto; /* Ajuster la hauteur de la sidebar */
+        overflow-y: auto; /* Permet le défilement si le contenu dépasse */
     }
 }
