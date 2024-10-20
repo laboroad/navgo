@@ -161,18 +161,18 @@ fieldset {
 
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Passer en colonne pour les petits écrans */
+        flex-direction: column; /* Empêche la carte et la sidebar de s'afficher côte à côte */
     }
 
     .map {
-        order: 2; /* La carte passe en second */
-        flex: 1;  /* La carte prend tout l'espace disponible */
-        height: 300px; /* Ajuster la hauteur de la carte sur mobile */
+        order: 1; /* Assure-toi que la carte est en premier */
+        flex: 1;  /* Prendre tout l'espace disponible */
+        height: 300px; /* Hauteur définie pour la carte */
     }
 
     .sidebar {
-        order: 1; /* La sidebar passe en premier */
-        flex: 0 0 auto; /* Laisser la largeur auto pour la sidebar */
+        order: 2; /* Sidebar vient après la carte */
+        flex: 0 0 auto; /* Largeur auto pour la sidebar */
         height: auto; /* Ajuster la hauteur de la sidebar */
         overflow-y: auto; /* Permet le défilement si le contenu dépasse */
     }
