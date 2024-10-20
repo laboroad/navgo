@@ -137,24 +137,3 @@ fieldset {
 
 .mapboxgl-ctrl-geocoder {
     min-width: 100%;
-    margin-bottom: 15px;
-}
-
-/* Styles spécifiques pour les petits écrans, par exemple en dessous de 768px de largeur */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: row; /* Layout en ligne pour les petits écrans */
-        height: auto; /* Ajuste la hauteur à celle du contenu */
-    }
-
-    .map {
-        flex: 1; /* La carte prend 50% de l'espace */
-        height: auto; /* Hauteur automatique pour la carte */
-    }
-
-    .sidebar {
-        flex: 1; /* La sidebar prend également 50% de l'espace */
-        height: auto; /* Ajuster la hauteur de la sidebar */
-        overflow-y: auto; /* Permet le défilement si le contenu dépasse */
-    }
-}
