@@ -15,13 +15,13 @@ body {
 }
 
 .map {
-    flex-grow: 2; /* La carte prend 2/3 de l'espace */
+    flex: 2; /* La carte prend 2/3 de l'espace */
     position: relative;
     min-height: 300px; /* Hauteur minimale de la carte */
 }
 
 .sidebar {
-    flex-grow: 1; /* La sidebar prend 1/3 de l'espace */
+    flex: 1; /* La sidebar prend 1/3 de l'espace */
     padding: 20px;
     background-color: white;
     border-top: 1px solid #ccc; /* Bordure en haut */
@@ -144,17 +144,16 @@ fieldset {
 @media (max-width: 768px) {
     .container {
         flex-direction: column; /* Passer en colonne pour les petits écrans */
+        height: auto; /* Permet de s'adapter à la hauteur du contenu */
     }
 
     .map {
-        order: 1; /* Assure-toi que la carte est en premier */
-        flex: 1;  /* Prendre tout l'espace disponible */
+        flex: 3; /* La carte prend plus d'espace */
         height: 300px; /* Hauteur définie pour la carte */
     }
 
     .sidebar {
-        order: 2; /* Sidebar vient après la carte */
-        flex: 0 0 auto; /* Largeur auto pour la sidebar */
+        flex: 1; /* Sidebar prend moins d'espace */
         height: auto; /* Ajuster la hauteur de la sidebar */
         overflow-y: auto; /* Permet le défilement si le contenu dépasse */
     }
