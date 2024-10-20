@@ -11,17 +11,17 @@ body {
 .container {
     display: flex;
     flex-direction: row; /* Layout en ligne par défaut pour les grands écrans */
-    height: 100vh;
+    height: 100vh; /* Hauteur de la vue entière */
 }
 
 .map {
-    flex: 2; /* La carte prend 2/3 de l'espace */
+    flex: 2; /* La carte prend 2/3 de l'espace sur grands écrans */
     position: relative;
     min-height: 300px; /* Hauteur minimale de la carte */
 }
 
 .sidebar {
-    flex: 1; /* La sidebar prend 1/3 de l'espace */
+    flex: 1; /* La sidebar prend 1/3 de l'espace sur grands écrans */
     padding: 20px;
     background-color: white;
     border-top: 1px solid #ccc; /* Bordure en haut */
@@ -143,17 +143,17 @@ fieldset {
 /* Styles spécifiques pour les petits écrans, par exemple en dessous de 768px de largeur */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Passer en colonne pour les petits écrans */
-        height: auto; /* Permet de s'adapter à la hauteur du contenu */
+        flex-direction: row; /* Layout en ligne pour les petits écrans */
+        height: auto; /* Ajuste la hauteur à celle du contenu */
     }
 
     .map {
-        flex: 3; /* La carte prend plus d'espace */
-        height: 300px; /* Hauteur définie pour la carte */
+        flex: 1; /* La carte prend 50% de l'espace */
+        height: auto; /* Hauteur automatique pour la carte */
     }
 
     .sidebar {
-        flex: 1; /* Sidebar prend moins d'espace */
+        flex: 1; /* La sidebar prend également 50% de l'espace */
         height: auto; /* Ajuster la hauteur de la sidebar */
         overflow-y: auto; /* Permet le défilement si le contenu dépasse */
     }
