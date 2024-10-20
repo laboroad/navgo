@@ -5,52 +5,37 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa; /* Light background for contrast */
+    background-color: #f8f9fa; /* Couleur de fond légère */
 }
 
 .container {
     display: flex;
-    flex-direction: column; /* Column layout for small screens */
+    flex-direction: row; /* Layout en ligne par défaut pour les grands écrans */
     height: 100vh;
 }
 
 .map {
-    flex-grow: 1; /* Takes all available space */
+    flex-grow: 2; /* La carte prend 2/3 de l'espace */
     position: relative;
-    min-height: 300px; /* Minimum height for the map */
+    min-height: 300px; /* Hauteur minimale de la carte */
 }
 
 .sidebar {
-    flex-shrink: 0; /* Sidebar does not shrink */
+    flex-grow: 1; /* La sidebar prend 1/3 de l'espace */
     padding: 20px;
     background-color: white;
-    border-top: 1px solid #ccc; /* Border at the top */
-    overflow-y: auto; /* Scrollable if content exceeds the height */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-/* Responsive design for larger screens */
-@media (min-width: 768px) {
-    .container {
-        flex-direction: row; /* Row layout for larger screens */
-    }
-
-    .map {
-        flex-grow: 2; /* Takes 2/3 of the space */
-    }
-
-    .sidebar {
-        flex-grow: 1; /* Takes 1/3 of the space */
-    }
+    border-top: 1px solid #ccc; /* Bordure en haut */
+    overflow-y: auto; /* Rendre défilable si contenu long */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Ombre subtile */
 }
 
 h3 {
     color: #333;
     margin-bottom: 20px;
-    font-size: 1.2rem; /* Adjusted to use rem for consistency */
+    font-size: 1.2rem; /* Utiliser rem pour une échelle cohérente */
 }
 
-/* Button styles */
+/* Boutons */
 #updateButton, #calculer {
     background-color: #007bff;
     color: white;
@@ -58,19 +43,19 @@ h3 {
     padding: 10px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1rem; /* Consistent with rem */
+    font-size: 1rem; /* Taille de police cohérente */
     width: 100%;
     transition: background-color 0.3s, transform 0.2s;
     margin-bottom: 12px;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Ombre sur les boutons */
 }
 
 #updateButton:hover, #calculer:hover {
     background-color: #0056b3;
-    transform: translateY(-2px); /* Lift effect on hover */
+    transform: translateY(-2px); /* Effet de survol */
 }
 
-/* Input styles */
+/* Champs de saisie (inputs) */
 .input {
     border: 1px solid #ccc;
     padding: 8px;
@@ -79,7 +64,7 @@ h3 {
     margin-bottom: 12px;
     box-sizing: border-box;
     transition: border-color 0.3s;
-    font-size: 1rem; /* Using rem for better scaling */
+    font-size: 1rem;
 }
 
 .short-input {
@@ -87,17 +72,17 @@ h3 {
 }
 
 .input:focus {
-    border-color: #007bff; /* Highlight on focus */
+    border-color: #007bff; /* Mettre en évidence lors du focus */
     outline: none;
 }
 
-/* Label styles */
+/* Labels */
 label {
     font-weight: bold;
     color: #555;
     margin-bottom: 5px;
     display: block;
-    font-size: 1rem; /* Consistent font size */
+    font-size: 1rem;
 }
 
 fieldset {
@@ -122,7 +107,7 @@ fieldset {
     font-weight: bold;
 }
 
-/* Input container with additional spacing */
+/* Container des inputs avec un espacement supplémentaire */
 .input-container {
     display: flex;
     align-items: center;
@@ -132,7 +117,7 @@ fieldset {
     margin-left: 10px;
 }
 
-/* Suggestions dropdown */
+/* Dropdown des suggestions */
 #suggestions {
     border: 1px solid #ccc;
     max-height: 200px;
@@ -155,3 +140,36 @@ fieldset {
     margin-bottom: 15px;
 }
 
+/* Styles spécifiques pour les petits écrans, par exemple en dessous de 768px de largeur */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Passer en colonne pour les petits écrans */
+    }
+
+    .map {
+        order: 2; /* La carte passe en second */
+        flex: 1;  /* La carte prend 1/3 de l'espace */
+        height: 33vh; /* Ajuster la hauteur de la carte sur mobile */
+    }
+
+    .sidebar {
+        order: 1; /* La sidebar passe en premier */
+        flex: 2;  /* La sidebar prend 2/3 de l'espace */
+        height: 67vh; /* Ajuster la hauteur de la sidebar */
+    }
+}
+
+/* Responsive design pour les plus grands écrans */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row; /* Layout en ligne pour les grands écrans */
+    }
+
+    .map {
+        flex-grow: 2; /* La carte prend 2/3 de l'espace */
+    }
+
+    .sidebar {
+        flex-grow: 1; /* La sidebar prend 1/3 de l'espace */
+    }
+}
