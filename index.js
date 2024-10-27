@@ -346,7 +346,7 @@ const calculateDistanceAndTime = (origin, siteCoordinates) => {
                 document.getElementById("time").value = `${duration} minutes`;
 
              // Appeler la fonction pour afficher la route entre l'origine et le site
-             //   displayRoute(origin, siteCoordinates);
+                displayRoute(origin, siteCoordinates);
 
                 // Calculer le nombre de tours en fonction de la distance et du poids du véhicule
                 calculateTours(duration, isoAppData.params.vehicle_weight); // Passer la durée en minutes
@@ -358,9 +358,6 @@ const calculateDistanceAndTime = (origin, siteCoordinates) => {
             console.error("Error in fetching directions:", error);
         });
 };
-
-
-
 // Ajouter une fonction pour calculer le nombre de tours
 function calculateTours(duration, vehicleWeight) {
     const tempsTravail = parseFloat(document.getElementById('tempsTravail').value) || 480; // minutes
@@ -504,10 +501,6 @@ function showError(message) {
 }
 
 // Ajouter une fonction pour afficher la route entre le point de départ et le site sélectionné
-
-
-
-
     const displayRoute = (origin, destination) => {
    // original // const directionsUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${origin.join(",")};${destination.join(",")}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
    // Récupérer la valeur sélectionnée dans le sélecteur
@@ -564,11 +557,9 @@ document.getElementById("profile-select").addEventListener("change", function ()
     renderIso(); // Rendre à nouveau l'isochrone avec le nouveau profil
 });
 
-
   // Mettre à jour l'isochrone lorsque la limite de temps change
   document.getElementById("timelimit").addEventListener("change", (e) => {
     isoAppData.params.minutes = e.target.value;
     renderIso();
   });
-
 });
