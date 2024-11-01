@@ -167,6 +167,13 @@ map.fitBounds(bounds, {
     // Appeler la fonction pour ajouter les marqueurs
     addMarkers(sites);
 
+
+// Charger une icône de camion personnalisée
+    const camionIcon = document.createElement('img');
+    camionIcon.src = 'benne.png'; 
+    camionIcon.style.width = '30px'; 
+    camionIcon.style.height = '30px';
+
     // Ajouter des marqueurs pour les transporteurs
     const transporters = [
         { longitude: 1.9097776, latitude: 43.8783046, name: "TAF" },
@@ -187,7 +194,8 @@ map.fitBounds(bounds, {
     // Fonction pour ajouter les marqueurs pour les transporteurs
     const addTransporterMarkers = (transporters) => {
         transporters.forEach(({ latitude, longitude, name }) => {
-            const marker = new mapboxgl.Marker({ color: "blue", anchor: "bottom" }) // Marqueur bleu
+          //  const marker = new mapboxgl.Marker({ color: "blue", anchor: "bottom" }) // Marqueur bleu
+              const marker = new mapboxgl.Marker({ element: camionIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de camion
                 .setLngLat([longitude, latitude])
                 .setPopup(new mapboxgl.Popup().setText(name)) // Ajouter un popup avec le nom du transporteur
                 .addTo(map);
@@ -202,6 +210,11 @@ map.fitBounds(bounds, {
 
 
 // Définir les marqueurs de concurrence
+// Charger une icône de carrière personnalisée
+    const gravelIcon = document.createElement('img');
+    gravelIcon.src = 'sable.png'; 
+    gravelIcon.style.width = '30px'; 
+    gravelIcon.style.height = '30px';
 const competitors = [
     { latitude: 43.7908, longitude: 1.3158,  name: "Carrière Castelnau MGM" },
     { latitude: 44.1495, longitude: 1.9493,  name: "Carrière Laguépie Eiffage" },
@@ -218,7 +231,8 @@ const competitors = [
 // Fonction pour ajouter des marqueurs de concurrence (vert)
 const addCompetitorMarkers = (competitors) => {
     competitors.forEach(({ latitude, longitude, name }) => {
-        new mapboxgl.Marker({ color: "green", anchor: "bottom" }) // Marqueur orange
+       // new mapboxgl.Marker({ color: "green", anchor: "bottom" }) // Marqueur 
+         new mapboxgl.Marker({ element: gravelIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de sable
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(name)) // Ajouter un popup avec le nom de la concurrence
             .addTo(map);
