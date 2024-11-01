@@ -147,7 +147,7 @@ const sites = [
 // Fonction pour ajouter les marqueurs sur la carte
 const addMarkers = (sites) => {
     sites.forEach(({ latitude, longitude, site }) => {
-        const marker = new mapboxgl.Marker({ color: "green", anchor: "bottom" }) // Marqueur vert
+        const marker = new mapboxgl.Marker({ color: "orange", anchor: "bottom" }) // Marqueur vert
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(site)) // Ajouter un popup avec le nom du site
             .addTo(map);
@@ -215,10 +215,10 @@ const competitors = [
 
 ];
 
-// Fonction pour ajouter des marqueurs de concurrence (orange)
+// Fonction pour ajouter des marqueurs de concurrence (vert)
 const addCompetitorMarkers = (competitors) => {
     competitors.forEach(({ latitude, longitude, name }) => {
-        new mapboxgl.Marker({ color: "orange", anchor: "bottom" }) // Marqueur orange
+        new mapboxgl.Marker({ color: "green", anchor: "bottom" }) // Marqueur orange
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(name)) // Ajouter un popup avec le nom de la concurrence
             .addTo(map);
