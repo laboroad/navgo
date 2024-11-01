@@ -198,6 +198,37 @@ map.fitBounds(bounds, {
     // Appeler la fonction pour ajouter les marqueurs des transporteurs
     addTransporterMarkers(transporters);
 
+
+
+
+// Définir les marqueurs de concurrence
+const competitors = [
+    { latitude: 43.7908, longitude: 1.3158,  name: "Carrière Castelnau MGM" },
+    { latitude: 44.1495, longitude: 1.9493,  name: "Carrière Laguépie Eiffage" },
+    { latitude: 43.7650, longitude: 2.2621,  name: "Carrière Peyrebrune Colas" },
+    { latitude: 43.9023, longitude: 2.1293,  name: "Carrière d'Albi Cemex" },
+    { latitude: 43.9515, longitude: 2.4379,  name: "Carrière d'Assac Vigroux" },
+    { latitude: 43.7797,  longitude: 2.1813, name: "Carrière Réalmont Bessac" },
+    { latitude: 43.5236,  longitude: 1.3833, name: "Carrière Portet Malet" },
+    { latitude: 43.2251,  longitude: 1.6130, name: "Carrière Lafarge Saverdun" }
+
+
+];
+
+// Fonction pour ajouter des marqueurs de concurrence (orange)
+const addCompetitorMarkers = (competitors) => {
+    competitors.forEach(({ latitude, longitude, name }) => {
+        new mapboxgl.Marker({ color: "orange", anchor: "bottom" }) // Marqueur orange
+            .setLngLat([longitude, latitude])
+            .setPopup(new mapboxgl.Popup().setText(name)) // Ajouter un popup avec le nom de la concurrence
+            .addTo(map);
+    });
+};
+
+addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
+
+
+
     // Configurer le marqueur d'origine et son interactivité
     const originPoint = new mapboxgl.Marker({
         draggable: true,
