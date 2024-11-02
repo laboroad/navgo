@@ -483,13 +483,13 @@ function calculerCoutParTonne(tours) {
             poidsVehiculeLivraison = 30; // Capacité de chargement nette
             break;
         case '12':
-            poidsVehiculeLivraison = 6.5; 
+            poidsVehiculeLivraison = 17; 
             break;
         case '7.5':
-            poidsVehiculeLivraison = 3.5; 
+            poidsVehiculeLivraison = 14; 
             break;
         case '3.5':
-            poidsVehiculeLivraison = 1; 
+            poidsVehiculeLivraison = 10; 
             break;
         default:
             poidsVehiculeLivraison = 0; // Pas de poids
