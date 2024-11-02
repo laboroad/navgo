@@ -144,10 +144,17 @@ const sites = [
     { latitude: 43.84527, longitude: 1.2729, site: "Verdun" },
 ];
 
+// Charger une icône GODO personnalisée
+    const gdoIcon = document.createElement('img');
+    gdoIcon.src = 'img/gdo.png'; 
+    gdoIcon.style.width = '45px'; 
+    gdoIcon.style.height = '45px';
+
 // Fonction pour ajouter les marqueurs sur la carte
 const addMarkers = (sites) => {
     sites.forEach(({ latitude, longitude, site }) => {
-        const marker = new mapboxgl.Marker({ color: "blue", anchor: "bottom" }) // Marqueur gdo
+        //const marker = new mapboxgl.Marker({ color: "blue", anchor: "bottom" }) // Marqueur gdo
+        const marker = new mapboxgl.Marker({ element: gdoIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de camion
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(site)) // Ajouter un popup avec le nom du site
             .addTo(map);
@@ -170,9 +177,9 @@ map.fitBounds(bounds, {
 
 // Charger une icône de camion personnalisée
     const camionIcon = document.createElement('img');
-    camionIcon.src = 'benne.png'; 
-    camionIcon.style.width = '30px'; 
-    camionIcon.style.height = '30px';
+    camionIcon.src = 'img/benne.png'; 
+    camionIcon.style.width = '45px'; 
+    camionIcon.style.height = '45px';
 
     // Ajouter des marqueurs pour les transporteurs
     const transporters = [
@@ -210,11 +217,11 @@ map.fitBounds(bounds, {
 
 
 // Définir les marqueurs de concurrence
-// Charger une icône de carrière personnalisée
-    const gravelIcon = document.createElement('img');
-    gravelIcon.src = 'sable.png'; 
-    gravelIcon.style.width = '30px'; 
-    gravelIcon.style.height = '30px';
+   const gravelIcon = document.createElement('img');
+   gravelIcon.src = 'img/conc.png'; 
+    gravelIcon.style.width = '45px'; 
+   gravelIcon.style.height = '45px';
+
 const competitors = [
     { latitude: 43.7908, longitude: 1.3158,  name: "Carrière Castelnau MGM" },
     { latitude: 44.1495, longitude: 1.9493,  name: "Carrière Laguépie Eiffage" },
@@ -231,8 +238,8 @@ const competitors = [
 // Fonction pour ajouter des marqueurs de concurrence (vert)
 const addCompetitorMarkers = (competitors) => {
     competitors.forEach(({ latitude, longitude, name }) => {
-       new mapboxgl.Marker({ color: "gray", anchor: "bottom" }) // Marqueur 
-       //  new mapboxgl.Marker({ element: gravelIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de sable
+         new mapboxgl.Marker({ element: gravelIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de sable
+     //  new mapboxgl.Marker({ color: "gray", anchor: "bottom" }) // Marqueur 
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(name)) // Ajouter un popup avec le nom de la concurrence
             .addTo(map);
@@ -245,7 +252,7 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
     // Configurer le marqueur d'origine et son interactivité
     const originPoint = new mapboxgl.Marker({
         draggable: true,
-       color: "red" // Changer la couleur du marqueur d'origine en rouge
+       color: "purple" // Changer la couleur du marqueur d'origine en rouge
     })
         .setLngLat(isoAppData.origins.a)
         .addTo(map);
@@ -520,6 +527,9 @@ function calculerCoutParTonne(tours) {
     console.log("Prix Transport Element:", prixTransportParJour);
     console.log("Coût Par Tonne Element:", coutParTonne);
     console.log("Nombre de jours:", joursPourLivraison);
+
+ document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
+
 }
 
 // Fonction pour afficher le message d'erreur et scroller vers l'erreur
