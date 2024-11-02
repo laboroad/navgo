@@ -147,7 +147,7 @@ const sites = [
 // Fonction pour ajouter les marqueurs sur la carte
 const addMarkers = (sites) => {
     sites.forEach(({ latitude, longitude, site }) => {
-        const marker = new mapboxgl.Marker({ color: "orange", anchor: "bottom" }) // Marqueur vert
+        const marker = new mapboxgl.Marker({ color: "blue", anchor: "bottom" }) // Marqueur gdo
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(site)) // Ajouter un popup avec le nom du site
             .addTo(map);
@@ -231,8 +231,8 @@ const competitors = [
 // Fonction pour ajouter des marqueurs de concurrence (vert)
 const addCompetitorMarkers = (competitors) => {
     competitors.forEach(({ latitude, longitude, name }) => {
-       // new mapboxgl.Marker({ color: "green", anchor: "bottom" }) // Marqueur 
-         new mapboxgl.Marker({ element: gravelIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de sable
+       new mapboxgl.Marker({ color: "gray", anchor: "bottom" }) // Marqueur 
+       //  new mapboxgl.Marker({ element: gravelIcon.cloneNode(true), anchor: "bottom" }) // Utiliser l'icône de sable
             .setLngLat([longitude, latitude])
             .setPopup(new mapboxgl.Popup().setText(name)) // Ajouter un popup avec le nom de la concurrence
             .addTo(map);
@@ -242,11 +242,10 @@ const addCompetitorMarkers = (competitors) => {
 addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
 
 
-
     // Configurer le marqueur d'origine et son interactivité
     const originPoint = new mapboxgl.Marker({
         draggable: true,
-        color: "red" // Changer la couleur du marqueur d'origine en rouge
+       color: "red" // Changer la couleur du marqueur d'origine en rouge
     })
         .setLngLat(isoAppData.origins.a)
         .addTo(map);
@@ -584,7 +583,7 @@ function showError(message) {
                             "line-cap": "round"
                         },
                         paint: {
-                            "line-color": "#ff0000", // Rouge pour la route
+                            "line-color": "#007bff", // Rouge #ff0000 pour la route  ou bleu
                             "line-width": 4
                         }
                     });

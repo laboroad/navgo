@@ -362,21 +362,42 @@
 </div>
 
 
-  <fieldset>
-        <legend><i class="fas fa-exchange-alt"></i> Convertisseur</legend>
-        <div class="input-group">
-            <label for="tonnes">Tonnes:</label>
-            <input type="number" id="tonnes" class="input short-input" placeholder="Poids" oninput="convertir(event)" />
-        </div>
-        <div class="input-group">
-            <label for="densite">Densité:</label>
-            <input type="number" id="densite" class="input short-input" placeholder="Densité" value="2.2" onfocus="changeColor()" oninput="convertir(event)" />
-        </div>
-        <div class="input-group">
-            <label for="m3">m<sup>3</sup>:</label>
-            <input type="number" id="m3" class="input short-input" placeholder="Volume" oninput="convertir(event)" />
-        </div>
-    </fieldset>
+<fieldset>
+    <legend>Convertisseur Volume &rarr; Masse</legend>
+
+    <!-- Largeur, Longueur et Hauteur pour calculer le volume -->
+    <div class="input-group">
+        <label for="largeur">Largeur (m) :</label>
+        <input type="number" id="largeur" class="input short-input" placeholder="en mètres" oninput="calculerVolume()" />
+    </div>
+    <div class="input-group">
+        <label for="longueur">Longueur (m) :</label>
+        <input type="number" id="longueur" class="input short-input" placeholder="en mètres" oninput="calculerVolume()" />
+    </div>
+    <div class="input-group">
+        <label for="hauteur">Hauteur (m) :</label>
+        <input type="number" id="hauteur" class="input short-input" placeholder="en mètres" oninput="calculerVolume()" />
+    </div>
+
+    <!-- Volume calculé en m³ -->
+    <div class="input-group">
+        <label for="m3">m<sup>3</sup> :</label>
+        <input type="number" id="m3" class="input short-input" placeholder="Volume en m³" oninput="convertir('m3')" />
+    </div>
+
+    <!-- Densité pour convertir en tonnes -->
+    <div class="input-group">
+        <label for="densite">Densité :</label>
+        <input type="number" id="densite" class="input short-input" placeholder="Densité en t/m³" value="2.2" oninput="convertir('densite')" />
+    </div>
+
+    <!-- Résultat en Tonnes -->
+    <div class="input-group">
+        <label for="tonnes">Tonnes :</label>
+        <input type="number" id="tonnes" class="input short-input" placeholder="Poids en tonnes" oninput="convertir('tonnes')" />
+    </div>
+</fieldset>
+
 
         </div>
     </div>
@@ -397,41 +418,32 @@
         });
     </script>
 
-  <script>
-    function convertir(event) {
-        // Récupérer les champs
-        const tonnesInput = document.getElementById('tonnes');
-        const densiteInput = document.getElementById('densite');
-        const m3Input = document.getElementById('m3');
+<script>
+    function calculerVolume() {
+        const largeur = parseFloat(document.getElementById('largeur').value);
+        const longueur = parseFloat(document.getElementById('longueur').value);
+        const hauteur = parseFloat(document.getElementById('hauteur').value);
 
-        // Réinitialiser les valeurs uniquement pour les champs nécessaires
-        if (event && event.target.id === 'tonnes') {
-            m3Input.value = '';  // Réinitialiser le volume
-            var tonnes = parseFloat(tonnesInput.value);
-            var densite = parseFloat(densiteInput.value) || 0;
+        if (largeur && longueur && hauteur) {
+            const volume = largeur * longueur * hauteur;
+            document.getElementById('m3').value = volume.toFixed(2);
+            convertir('m3');
+        }
+    }
 
-            // Calculer le volume si la densité est valide
-            if (densite > 0) {
-                m3Input.value = (tonnes / densite).toFixed(2); // Calculer le volume
-            }
-        } else if (event && event.target.id === 'm3') {
-            tonnesInput.value = '';  // Réinitialiser les tonnes
-            var m3 = parseFloat(m3Input.value);
-            var densite = parseFloat(densiteInput.value) || 0;
+    function convertir(source) {
+        const tonnes = parseFloat(document.getElementById('tonnes').value);
+        const densite = parseFloat(document.getElementById('densite').value);
+        const m3 = parseFloat(document.getElementById('m3').value);
 
-            // Calculer les tonnes si la densité est valide
-            if (densite > 0) {
-                tonnesInput.value = (m3 * densite).toFixed(2); // Calculer les tonnes
-            }
-        } else if (event && event.target.id === 'densite') {
-            var tonnes = parseFloat(tonnesInput.value);
-            var m3 = parseFloat(m3Input.value);
-
-            // Recalculer le volume ou les tonnes en fonction des autres champs
-            if (tonnes) {
-                m3Input.value = (tonnes / densiteInput.value).toFixed(2); // Recalculer le volume
-            } else if (m3) {
-                tonnesInput.value = (m3 * densiteInput.value).toFixed(2); // Recalculer les tonnes
+        if (densite > 0) {
+            if (source === 'tonnes' && tonnes) {
+                document.getElementById('m3').value = (tonnes / densite).toFixed(2);
+            } else if (source === 'm3' && m3) {
+                document.getElementById('tonnes').value = (m3 * densite).toFixed(2);
+            } else if (source === 'densite' && (tonnes || m3)) {
+                if (tonnes) document.getElementById('m3').value = (tonnes / densite).toFixed(2);
+                if (m3) document.getElementById('tonnes').value = (m3 * densite).toFixed(2);
             }
         }
     }
