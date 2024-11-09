@@ -351,6 +351,7 @@ document.getElementById("updateButton").addEventListener("click", function() {
 
                     // Calculer le coût par tonne après avoir calculé la distance et le temps
                     const distance = document.getElementById("distance").value;
+                   const distanceG = document.getElementById("distanceG").value;
                     const prixTransportParJour = parseFloat(document.getElementById('prixTransport').value);
                     const tours = parseInt(document.getElementById('numToursInt').value);
                     
@@ -394,6 +395,7 @@ const calculateDistanceAndTime = (origin, siteCoordinates) => {
                 const distance = (data.routes[0].distance / 1000).toFixed(2); // Convertir en km
                 const duration = (data.routes[0].duration / 60).toFixed(0); // Convertir en minutes
                 document.getElementById("distance").value = `${distance} km`;
+                document.getElementById("distanceG").value = `${distance} km`;
                 document.getElementById("time").value = `${duration} minutes`;
 
              // Appeler la fonction pour afficher la route entre l'origine et le site
@@ -528,8 +530,22 @@ function calculerCoutParTonne(tours) {
     console.log("Coût Par Tonne Element:", coutParTonne);
     console.log("Nombre de jours:", joursPourLivraison);
 
- document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
 
+
+// Calcul du coût par tonne bascule (proportionnel)
+const quantiteVirtuelle = (poidsVehiculeLivraison * tours);
+console.log("quantiteVirtuelle:", quantiteVirtuelle);
+const coutParTonneBasculeV = (prixTransportParJour /  quantiteVirtuelle);
+
+const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quantiteVirtuelle;
+document.getElementById("priceoneshot").value = coutParTonneBascule.toFixed(2);
+
+
+
+
+
+
+ document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
 }
 
 // Fonction pour afficher le message d'erreur et scroller vers l'erreur
