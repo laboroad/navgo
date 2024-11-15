@@ -537,9 +537,9 @@ const forfaitTonneBasculeV = (prixTransportParJour /  quantiteVirtuelle) * quant
 console.log("forfaitTonneBasculeV:", forfaitTonneBasculeV);
 const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quantiteVirtuelle;
 
+
 document.getElementById("forfaitoneshot").value = forfaitTonneBasculeV.toFixed(2);
-//document.getElementById("priceoneshot").value = coutParTonneBascule.toFixed(2);
- document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
+document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
 
 }
 
