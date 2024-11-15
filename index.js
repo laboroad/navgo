@@ -267,29 +267,29 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
 
     // Fonction pour géocoder l'entrée de la ville
     const geocodeCity = function(city) {
-        const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(city)}.json?country=FR&access_token=${mapboxgl.accessToken}`;
+    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(city)}.json?country=FR&proximity=1.4442,43.6045&bbox=1.0012,42.2429,4.8449,45.0042&access_token=${mapboxgl.accessToken}`;
 
-        return fetch(geocodeUrl)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error("Error fetching geocode data: " + res.statusText);
-                }
-                return res.json();
-            })
-            .then(data => {
-                if (data.features.length > 0) {
-                    const { center } = data.features[0];
-                    isoAppData.origins.a = center; // Met à jour la position d'origine
-                    originPoint.setLngLat(center); // Met à jour la position du marqueur d'origine
-                    renderIso(); // Rendre à nouveau l'isochrone
-                } else {
-                    console.error("No geocode data found for the city.");
-                }
-            })
-            .catch(error => {
-                console.error("Error in geocoding:", error);
-            });
-    };
+    return fetch(geocodeUrl)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Error fetching geocode data: " + res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (data.features.length > 0) {
+                const { center } = data.features[0];
+                isoAppData.origins.a = center;
+                originPoint.setLngLat(center);
+                renderIso();
+            } else {
+                console.error("No geocode data found for the city.");
+            }
+        })
+        .catch(error => {
+            console.error("Error in geocoding:", error);
+        });
+};
 
 
 
@@ -488,17 +488,14 @@ function calculerCoutParTonne(tours) {
 
     // Déterminer le poids de véhicule selon la sélection
     switch (poidsValue) {
-        case '40':
+        case '30':
             poidsVehiculeLivraison = 30; // Capacité de chargement nette
             break;
-        case '12':
-            poidsVehiculeLivraison = 17; 
+        case '16':
+            poidsVehiculeLivraison = 16; 
             break;
-        case '7.5':
-            poidsVehiculeLivraison = 14; 
-            break;
-        case '3.5':
-            poidsVehiculeLivraison = 10; 
+        case '13':
+            poidsVehiculeLivraison = 13; 
             break;
         default:
             poidsVehiculeLivraison = 0; // Pas de poids
@@ -536,16 +533,14 @@ function calculerCoutParTonne(tours) {
 const quantiteVirtuelle = (poidsVehiculeLivraison * tours);
 console.log("quantiteVirtuelle:", quantiteVirtuelle);
 const coutParTonneBasculeV = (prixTransportParJour /  quantiteVirtuelle);
-
+const forfaitTonneBasculeV = (prixTransportParJour /  quantiteVirtuelle) * quantite;
+console.log("forfaitTonneBasculeV:", forfaitTonneBasculeV);
 const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quantiteVirtuelle;
-document.getElementById("priceoneshot").value = coutParTonneBascule.toFixed(2);
 
-
-
-
-
-
+document.getElementById("forfaitoneshot").value = forfaitTonneBasculeV.toFixed(2);
+//document.getElementById("priceoneshot").value = coutParTonneBascule.toFixed(2);
  document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
+
 }
 
 // Fonction pour afficher le message d'erreur et scroller vers l'erreur

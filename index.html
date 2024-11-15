@@ -283,10 +283,10 @@
   <div id="cadre1">
                 <label>Camions:</label>
                 <div class="horizontal-list">
-         <label><input id="40t" name="poids" type="radio" checked="checked" onclick="updateValues()"> 30t</label>
-        <label><input id="12t" name="poids" type="radio" onclick="updateValues()"> 17t</label>
-        <label><input id="7.5t" name="poids" type="radio" onclick="updateValues()"> 14t</label>
-        <label><input id="3.5t" name="poids" type="radio" onclick="updateValues()"> 10t</label>
+         <label><input id="30t" name="poids" type="radio" checked="checked" onclick="updateValues()"> 30t (semi)</label>
+        <label><input id="16t" name="poids" type="radio" onclick="updateValues()"> 16t (8x4)</label>
+        <label><input id="13t" name="poids" type="radio" onclick="updateValues()"> 13t (6x4)</label>
+       
                 </div>
             </div>
 
@@ -311,7 +311,7 @@
 
   <div class="input-group">
         <label for="prixTransport">Forfait transport :</label>
-        <input id="prixTransport" value="680" type="number" class="input short-input">
+        <input id="prixTransport" value="700" type="number" class="input short-input">
     </div>
 
 
@@ -321,7 +321,7 @@
 
 <div id="resultats" style="margin-bottom: 10px;">
    
-       <legend id="jours">Résultats</legend>
+       <legend id="jours">Business</legend>
 
         <!-- Itinéraire -->
         <p><strong>Itinéraire :</strong></p>
@@ -378,15 +378,17 @@
 
 <div id="resultatsG" style="margin-bottom: 10px;">
         <!-- Bascule-->
-         <p>One Shot :</p>
+         <p>One Shot € HT</p>
           <div style="display: flex; align-items: center; margin-bottom: 15px;">
             <div style="flex: 1; display: flex; align-items: center;">
                 <label for="distanceG" style="flex: 0 0 120px;">Distance</label>
                 <input type="text" id="distanceG" class="input" style="flex: 1; margin-left: 5px;" readonly />
             </div>
-            <div style="flex: 1; display: flex; align-items: center;">
-                <label for="priceoneshot" style="flex: 0 0 100px;margin-left: 15px;">Prix (€/t) </label>
-                <input type="text" id="priceoneshot" class="input" style="flex: 1; margin-left: 1px;" readonly />
+          
+
+             <div style="flex: 1; display: flex; align-items: center;">
+                <label for="forfaitoneshot" style="flex: 0 0 120px;margin-left: 15px;">Forfait (€/t) </label>
+                <input type="text" id="forfaitoneshot" class="input" style="flex: 1; margin-left: 1px;" readonly />
             </div>
      </div>   
 </div>
@@ -416,7 +418,7 @@
     <!-- Densité pour convertir en tonnes -->
     <div class="input-group">
         <label for="densite">Densité :</label>
-        <input type="number" id="densite" class="input short-input" placeholder="Densité en t/m³" value="2.2" oninput="convertir('densite')" />
+        <input type="number" id="densite" class="input short-input" placeholder="Densité en t/m³" value="1.9" oninput="convertir('densite')" />
     </div>
 
     <!-- Résultat en Tonnes -->
@@ -491,23 +493,19 @@ function updateValues() {
     var poids = document.querySelector('input[name="poids"]:checked').id;
 
     // Définir les valeurs de forfait transport et temps d'arrêt en fonction du poids sélectionné
-    if (poids === "40t") { // Si 40t est sélectionné
-        document.getElementById("prixTransport").value = 680; // Forfait transport
+    if (poids === "30t") { // Si 40t est sélectionné
+        document.getElementById("prixTransport").value = 700; // Forfait transport
         document.getElementById("tempsArret").value = 15; // Temps d'arrêt
-       // document.getElementById("quantite").value = 30; // Mettre 30 dans la quantité (pour 40t)
-    } else if (poids === "12t") { // Si 12t est sélectionné
-        document.getElementById("prixTransport").value = 800; // Forfait transport
-        document.getElementById("tempsArret").value = 30; // Temps d'arrêt
-        document.getElementById("quantite").value = 17; // Mettre 17 dans la quantité (pour 12t)
-    } else if (poids === "7.5t") { // Si 7.5t est sélectionné
-        document.getElementById("prixTransport").value = 800; // Forfait transport
-        document.getElementById("tempsArret").value = 30; // Temps d'arrêt
-        document.getElementById("quantite").value = 14; // Mettre 14 dans la quantité (pour 7.5t)
-    } else if (poids === "3.5t") { // Si 3.5t est sélectionné
-        document.getElementById("prixTransport").value = 800; // Forfait transport
-        document.getElementById("tempsArret").value = 30; // Temps d'arrêt
-        document.getElementById("quantite").value = 10; // Mettre 10 dans la quantité (pour 3.5t)
-    }
+        document.getElementById("quantite").value = 30; // Mettre 30 dans la quantité (pour 30t)
+    } else if (poids === "16t") { // Si 12t est sélectionné
+        document.getElementById("prixTransport").value = 620; // Forfait transport
+        document.getElementById("tempsArret").value = 20; // Temps d'arrêt
+        document.getElementById("quantite").value = 16; // Mettre 16 dans la quantité (pour 16t)
+    } else if (poids === "13t") { // Si 7.5t est sélectionné
+        document.getElementById("prixTransport").value = 520; // Forfait transport
+        document.getElementById("tempsArret").value = 20; // Temps d'arrêt
+        document.getElementById("quantite").value = 13; // Mettre 13 dans la quantité (pour 13t)
+    } 
 }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -516,7 +514,7 @@ function updateValues() {
 
         radios.forEach(radio => {
             radio.addEventListener('click', function() {
-                if (this.id === '12t' || this.id === '7.5t' || this.id === '3.5t') {
+                if (this.id === '16t' || this.id === '13t') {
                    // resultats.style.display = 'none';
                    resultats.style.display = 'block';
                 } else {
