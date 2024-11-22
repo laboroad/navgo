@@ -395,19 +395,30 @@
 
 <fieldset>
     <legend>Convertisseur Volume &rarr; Masse</legend>
-    <!-- Largeur, Longueur et Hauteur pour calculer le volume -->
+
+    <!-- Largeur et Longueur pour calculer m² -->
     <div class="input-group">
         <label for="largeur">Largeur (m) :</label>
-        <input type="number" id="largeur" class="input short-input" placeholder="en mètres" oninput="calculerVolume()" />
+        <input type="number" id="largeur" class="input short-input" placeholder="en mètres" oninput="calculerSurfaceVolume()" />
     </div>
     <div class="input-group">
         <label for="longueur">Longueur (m) :</label>
-        <input type="number" id="longueur" class="input short-input" placeholder="en mètres" oninput="calculerVolume()" />
+        <input type="number" id="longueur" class="input short-input" placeholder="en mètres" oninput="calculerSurfaceVolume()" />
     </div>
+
+    <!-- Surface calculée en m² -->
     <div class="input-group">
-        <label for="hauteur">Hauteur (m) :</label>
-        <input type="number" id="hauteur" class="input short-input" placeholder="en mètres" oninput="calculerVolume()" />
+        <label for="surface">m² :</label>
+        <input type="number" id="surface" class="input short-input" placeholder="Surface en m²" oninput="convertirDepuisSurface()" />
     </div>
+
+    <!-- Hauteur en cm -->
+  <!-- Hauteur en cm -->
+    <div class="input-group">
+        <label for="hauteur">Hauteur (cm) :</label>
+        <input type="number" id="hauteur" class="input short-input" placeholder="en centimètres" oninput="calculerVolumeDepuisSurface()" />
+       
+    </div> 
 
     <!-- Volume calculé en m³ -->
     <div class="input-group">
@@ -447,15 +458,42 @@
     </script>
 
 <script>
-    function calculerVolume() {
+    function calculerSurfaceVolume() {
+        // Récupère largeur et longueur
         const largeur = parseFloat(document.getElementById('largeur').value);
         const longueur = parseFloat(document.getElementById('longueur').value);
-        const hauteur = parseFloat(document.getElementById('hauteur').value);
 
-        if (largeur && longueur && hauteur) {
-            const volume = largeur * longueur * hauteur;
+        // Si largeur et longueur sont valides, calcule m²
+        if (largeur && longueur) {
+            const surface = largeur * longueur;
+            document.getElementById('surface').value = surface.toFixed(2);
+            calculerVolumeDepuisSurface(); // Calcul auto du volume
+        }
+    }
+
+    function calculerVolumeDepuisSurface() {
+        const surface = parseFloat(document.getElementById('surface').value);
+        const hauteurCm = parseFloat(document.getElementById('hauteur').value);
+
+        // Si surface et hauteur sont valides, calcule m³
+        if (surface && hauteurCm) {
+            const hauteurM = hauteurCm / 100; // Conversion de cm en m
+            const volume = surface * hauteurM;
             document.getElementById('m3').value = volume.toFixed(2);
-            convertir('m3');
+            convertir('m3'); // Calcul auto des tonnes
+        }
+    }
+
+    function convertirDepuisSurface() {
+        const surface = parseFloat(document.getElementById('surface').value);
+        const hauteurCm = parseFloat(document.getElementById('hauteur').value);
+
+        // Si surface et hauteur sont valides, calcule m³
+        if (surface && hauteurCm) {
+            const hauteurM = hauteurCm / 100;
+            const volume = surface * hauteurM;
+            document.getElementById('m3').value = volume.toFixed(2);
+            convertir('m3'); // Calcul auto des tonnes
         }
     }
 
@@ -466,25 +504,38 @@
 
         if (densite > 0) {
             if (source === 'tonnes' && tonnes) {
-                document.getElementById('m3').value = (tonnes / densite).toFixed(2);
+                // Calculer m³ depuis les tonnes
+                const volume = tonnes / densite;
+                document.getElementById('m3').value = volume.toFixed(2);
+                document.getElementById('surface').value = ''; // Invalide m² (besoin de largeur/longueur)
             } else if (source === 'm3' && m3) {
+                // Calculer tonnes depuis m³
                 document.getElementById('tonnes').value = (m3 * densite).toFixed(2);
+                recalculerSurfaceEtHauteurDepuisVolume(m3);
             } else if (source === 'densite' && (tonnes || m3)) {
+                // Calculer soit m³ soit tonnes selon le contexte
                 if (tonnes) document.getElementById('m3').value = (tonnes / densite).toFixed(2);
                 if (m3) document.getElementById('tonnes').value = (m3 * densite).toFixed(2);
             }
         }
     }
 
-    // Changer la couleur lorsque le champ densité est en focus
-    function changeColor() {
-        document.getElementById('densite').style.backgroundColor = '#e0e0e0';
+    function recalculerSurfaceEtHauteurDepuisVolume(m3) {
+        const largeur = parseFloat(document.getElementById('largeur').value);
+        const longueur = parseFloat(document.getElementById('longueur').value);
+
+        if (largeur && longueur) {
+            const surface = largeur * longueur;
+            document.getElementById('surface').value = surface.toFixed(2);
+
+            // Calculer hauteur en cm
+            const hauteurM = m3 / surface;
+            document.getElementById('hauteur').value = (hauteurM * 100).toFixed(0);
+        }
     }
 
-    // Réinitialiser la couleur lorsque le champ densité perd le focus
-    document.getElementById('densite').addEventListener('blur', function() {
-        this.style.backgroundColor = '';
-    });
+
+
 
 //radio value 
 // Fonction pour mettre à jour les valeurs en fonction du poids sélectionné
