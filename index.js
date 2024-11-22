@@ -505,6 +505,7 @@ function calculerCoutParTonne(tours) {
     // Calculer le nombre de jours pour livraison
     const joursPourLivraison = Math.ceil(quantite / (tours * poidsVehiculeLivraison));
 
+
     // Calculer le coût par tonne livrée
     const coutParTonne = (prixTransportParJour * joursPourLivraison) / quantite;
 
@@ -540,6 +541,7 @@ const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quant
 
 document.getElementById("forfaitoneshot").value = forfaitTonneBasculeV.toFixed(2);
 document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
+document.getElementById("joursmax").textContent = `Nombre de jours : ${joursPourLivraison}`;
 
 }
 

@@ -320,65 +320,96 @@
 <button id="updateButton">Envoyer</button>
 
 <div id="resultats" style="margin-bottom: 10px;">
-   
-       <legend id="jours">Business</legend>
-
-        <!-- Itinéraire -->
-        <p><strong>Itinéraire :</strong></p>
-        <div style="display: flex; align-items: center; margin-bottom: 15px;">
-            <div style="flex: 1; display: flex; align-items: center;">
-                <label for="distance" style="flex: 0 0 120px;">Distance</label>
-                <input type="text" id="distance" class="input" style="flex: 1; margin-left: 5px;" readonly />
-            </div>
-            <div style="flex: 1; display: flex; align-items: center;">
-                <label for="time" style="flex: 0 0 100px;margin-left: 15px;">Temps</label>
-                <input type="text" id="time" class="input" style="flex: 1; margin-left: 1px;" readonly />
-            </div>
+    <!-- Cadre supérieur pour Distance et Temps -->
+    <div style="display: flex; justify-content: space-between; padding: 15px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; background-color: #f0f4fa;">
+        <div style="flex: 1; display: flex; align-items: center; margin-right: 10px;">
+            <label for="distance" style="flex: 0 0 120px;">Distance</label>
+            <input type="text" id="distance" class="input" style="flex: 1; margin-left: 5px;" readonly />
         </div>
+        <div style="flex: 1; display: flex; align-items: center;">
+            <label for="time" style="flex: 0 0 120px;">Temps</label>
+            <input type="text" id="time" class="input" style="flex: 1; margin-left: 5px;" readonly />
+        </div>
+    </div>
 
-        <!-- Tours -->
-        <p><strong>Tours :</strong></p>
-        <div style="display: flex; align-items: center; margin-bottom: 15px;">
-            <div style="flex: 1; display: flex; align-items: center;">
+    <!-- Conteneur principal avec 2 colonnes -->
+    <div style="display: flex; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+        <!-- Colonne gauche -->
+        <div style="flex: 1; background-color: #f0f4fa; padding: 15px; border-right: 2px solid #007acc;">
+            <!-- Légende spécifique à la colonne gauche -->
+            <p id="jours" style="flex: 1; font-weight: bold; margin-bottom: 10px;">Standard</p>
+
+            <!-- nbr tours-->
+            <p><strong>Tours :</strong></p>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
                 <label for="numToursInt" style="flex: 0 0 120px;">Rotations</label>
                 <input type="text" id="numToursInt" class="input" style="flex: 1; margin-left: 5px;" readonly />
             </div>
-            <div style="flex: 1; display: flex; align-items: center;">
-                <label for="numToursDecimal" style="flex: 0 0 100px;margin-left: 15px;">Max Tours</label>
-                <input type="text" id="numToursDecimal" class="input" style="flex: 1; margin-left: 1px;" readonly />
+
+            <!-- Prix -->
+            <p><strong>Prix :</strong></p>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <label for="coutParTonne" style="flex: 0 0 120px;">Coût (€/t)</label>
+                <input type="text" id="coutParTonne" class="input" style="flex: 1; margin-left: 5px;" readonly />
             </div>
-        </div>
 
-   <!-- Prix -->
-<p><strong>Prix :</strong></p>
-<div style="display: flex; align-items: center;">
-    <div style="flex: 1; display: flex; align-items: center;">
-        <label for="coutParTonne" style="flex: 0 0 120px;">Coût (€/t)</label>
-        <input type="text" id="coutParTonne" class="input" style="flex: 1; margin-left: 5px;" readonly />
-    </div>
-    <div style="flex: 1; display: flex; align-items: center;">
-        <label for="couttoursAvecUnPlus" style="flex: 0 0 100px; margin-left: 15px;">Max (€/t)</label>
-        <input type="text" id="couttoursAvecUnPlus" class="input" style="flex: 1; margin-left: 1px;" readonly />
-    </div>
-</div>
-
-      <!-- Double Fret -->
-        <p><strong>Double Fret :</strong></p>
-     <div style="display: flex; align-items: center;">
-            <div style="flex: 1; display: flex; align-items: center;">
+            <!-- Double Fret -->
+            <p><strong>Double Fret :</strong></p>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
                 <label for="coutParTonneDoubleFret" style="flex: 0 0 120px;">Coût (€/t)</label>
                 <input type="text" id="coutParTonneDoubleFret" class="input" style="flex: 1; margin-left: 5px;" readonly />
             </div>
-              <div style="flex: 1; display: flex; align-items: center;">
-                <label for="coutParTonneDoubleFretMax" style="flex: 0 0 100px; margin-left: 15px;">Max (€/t)</label>
-                <input type="text" id="coutParTonneDoubleFretMax" class="input" style="flex: 1; margin-left: 1px;" readonly />
+        </div>
+
+        <!-- Colonne droite -->
+        <div style="flex: 1; background-color: #e6f7ff; padding: 15px;">
+            <!-- Légende spécifique à la colonne droite -->
+            <p id="joursmax" style="flex: 1; font-weight: bold; margin-bottom: 10px;">Optimisation</p>
+
+            <!-- Max Tours -->
+            <p><strong>Max Tours :</strong></p>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <label for="numToursDecimal" style="flex: 0 0 120px;">Rotations</label>
+                <input type="text" id="numToursDecimal" class="input" style="flex: 1; margin-left: 5px;" readonly />
+            </div>
+
+            <!-- Max Coût -->
+            <p><strong>Prix mini :</strong></p>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <label for="couttoursAvecUnPlus" style="flex: 0 0 120px;">Max (€/t)</label>
+                <input type="text" id="couttoursAvecUnPlus" class="input" style="flex: 1; margin-left: 5px;" readonly />
+            </div>
+
+            <!-- Double Fret -->
+            <p><strong>Double Fret :</strong></p>
+            <div style="display: flex; align-items: center;">
+                <label for="coutParTonneDoubleFretMax" style="flex: 0 0 120px;">Max (€/t)</label>
+                <input type="text" id="coutParTonneDoubleFretMax" class="input" style="flex: 1; margin-left: 5px;" readonly />
             </div>
         </div>
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div id="resultatsG" style="margin-bottom: 10px;">
         <!-- Bascule-->
-         <p>One Shot € HT</p>
+  <legend id="onesh" style="font-size: 1.0 em; font-weight: bold; margin-bottom: 10px;">One Shot € HT</legend>
+      
           <div style="display: flex; align-items: center; margin-bottom: 15px;">
             <div style="flex: 1; display: flex; align-items: center;">
                 <label for="distanceG" style="flex: 0 0 120px;">Distance</label>
@@ -393,9 +424,8 @@
      </div>   
 </div>
 
-<fieldset>
-    <legend>Convertisseur Volume &rarr; Masse</legend>
-
+<fieldset style="background-color: #f0f4fa; padding: 15px; border-radius: 8px;">
+<legend style="font-size: 1.0 em; font-weight: bold; margin-bottom: 10px;">Convertisseur Volume &rarr; Masse</legend>
     <!-- Largeur et Longueur pour calculer m² -->
     <div class="input-group">
         <label for="largeur">Largeur (m) :</label>
