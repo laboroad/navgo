@@ -240,25 +240,53 @@
 
 @media (max-width: 768px) {
     .input {
-        font-size: 16px;
-        padding: 10px;
-    }
-
-    #resultats {
-        display: block; /* Empile les champs sur les petits écrans */
-        padding: 10px;
+        font-size: 16px; /* Augmente la taille de la police */
+        padding: 10px; /* Ajoute plus d'espace interne */
     }
 
     #resultats input {
-        width: 100%;
-        margin-bottom: 10px;
+        width: calc(100% - 10px); /* Assurez-vous qu'il prend presque toute la largeur */
+        font-size: 14px; /* Augmente la taille de la police */
     }
 
-    #resultats label {
-        font-size: 16px;
-        margin-bottom: 5px;
+    label {
+        font-size: 16px; /* Assurez-vous que les étiquettes restent lisibles */
     }
 }
+#resultats {
+    display: flex;
+    flex-direction: column; /* Réorganise les champs en colonnes si nécessaire */
+}
+
+#resultats div {
+    flex-wrap: wrap; /* Permet aux champs de passer à la ligne suivante */
+    margin-bottom: 10px; /* Ajoute un espacement entre les éléments */
+}
+
+#resultats input {
+    width: 100%; /* Force les champs à occuper toute la largeur disponible */
+    box-sizing: border-box; /* Inclut le padding dans la largeur */
+}
+#resultats div {
+    padding: 10px;
+}
+
+#resultats p, #resultats strong, #resultats label {
+    font-size: 14px; /* Maintient les textes lisibles sur mobile */
+}
+
+#resultats input {
+    min-width: 50px; /* Définit une largeur minimale */
+    max-width: 100%; /* Empêche les champs de déborder */
+}
+
+#resultats input {
+    margin-bottom: 10px; /* Espacement entre chaque champ */
+}
+
+
+
+
 
     </style>
 </head>
