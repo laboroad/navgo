@@ -168,18 +168,7 @@
     width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
     box-sizing: border-box; /* Inclut le padding dans la largeur totale */
 }
-   /* Result display styling green */
-    #resultatsG {
-    margin-top: 15px;
-    padding: 5px; /* Espace à l'intérieur de la section */
-    border: 1px solid #00ff1a; /* Bordure verte */
-    border-radius: 5px;
-    background-color: #e9fff9; /* Fond vert clair */
-    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.1); /* Ombre subtile */
-    max-width: 100%; /* Limite la largeur à 100% du parent */
-    width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
-    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
-}
+   
 #resultats fieldset {
     margin: 0 auto;
     padding: 1px; /* Laissez un peu d'espace à l'intérieur */
@@ -283,22 +272,76 @@
 #resultats input {
     margin-bottom: 10px; /* Espacement entre chaque champ */
 }
+
+
+/* Result display styling green */
+
+#resultatsG {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #00ff1a; /* Bordure verte */
+    border-radius: 5px;
+    background-color: #e9fff9; /* Fond vert clair */
+    max-width: 100%; /* Empêche de déborder */
+    box-sizing: border-box;
+}
+
+#resultatsG legend {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#resultatsG div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* Réduit l'espace horizontal */
+}
+
+#resultatsG label {
+    font-weight: bold;
+    color: #555;
+    font-size: 14px;
+    margin-right: 8px; /* Espace ajusté entre label et input */
+    flex: 0 0 100px; /* Largeur constante pour les labels */
+    text-align: right; /* Alignement propre */
+}
+
+#resultatsG .input {
+    border: 1px solid #ccc;
+    padding: 10px; /* Champ plus grand */
+    border-radius: 5px;
+    width: 100%; /* Prend tout l'espace disponible */
+    box-sizing: border-box; /* Inclus le padding dans la largeur */
+    font-size: 16px; /* Texte plus grand */
+    flex: 1; /* Élargit automatiquement */
+}
+
+#resultatsG .input:focus {
+    border-color: #00ff1a; /* Bordure verte au focus */
+    outline: none;
+}
+
 @media (max-width: 768px) {
     #resultatsG div {
-        flex-wrap: wrap; /* Les éléments peuvent passer à la ligne */
+        flex-wrap: wrap; /* Les éléments passent à la ligne si nécessaire */
         gap: 10px;
     }
 
     #resultatsG label {
-        flex: 1 0 100%; /* Label prend toute la largeur */
-        text-align: left;
-        margin-right: 0; /* Supprime le décalage */
+        flex: 1 0 100%; /* Les labels prennent toute la largeur */
+        margin-right: 0; /* Supprime l'espace à droite */
+        text-align: left; /* Alignement naturel */
     }
 
     #resultatsG .input {
-        flex: 1 0 100%; /* Input prend toute la largeur */
+        flex: 1 0 100%; /* Les champs prennent toute la largeur */
     }
 }
+
+
 
 
 
