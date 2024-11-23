@@ -605,11 +605,16 @@ function updateValues() {
             });
         });
     });
-    const password = prompt("Entrez le mot de passe pour accéder :");
-    const correctPassword = "gdo";
-    if (password.toLowerCase() !== correctPassword.toLowerCase()) {
-        document.body.innerHTML = "<h1>Accès refusé</h1>";
-    }
+
+ const pass = localStorage.getItem("auth-pass");
+    const GDO = "gdo";
+    if (!pass || pass.toLowerCase() !== GDO.toLowerCase()) {
+        const userInput = prompt("Mot de passe requis :");
+        if (userInput && userInput.toLowerCase() === GDO.toLowerCase()) {
+            localStorage.setItem("auth-pass", userInput); 
+        } else {
+            document.body.innerHTML = "<h1>Accès refusé</h1>";
+        } }
     </script>
 </body>
 </html>
