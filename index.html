@@ -605,6 +605,13 @@ function updateValues() {
             });
         });
     });
+
+    const password = prompt("Entrez le mot de passe pour accéder :");
+    const correctPassword = "gdo";
+    if (password.toLowerCase() !== correctPassword.toLowerCase()) {
+        document.body.innerHTML = "<h1>Accès refusé</h1>";
+    }
+
     </script>
 </body>
 </html>
