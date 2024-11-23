@@ -276,72 +276,6 @@
 
 /* Result display styling green */
 
-#resultatsG {
-    margin-top: 15px;
-    padding: 10px;
-    border: 1px solid #00ff1a; /* Bordure verte */
-    border-radius: 5px;
-    background-color: #e9fff9; /* Fond vert clair */
-    max-width: 100%; /* Empêche de déborder */
-    box-sizing: border-box;
-}
-
-#resultatsG legend {
-    font-size: 1em;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-#resultatsG div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px; /* Réduit l'espace horizontal */
-}
-
-#resultatsG label {
-    font-weight: bold;
-    color: #555;
-    font-size: 14px;
-    margin-right: 8px; /* Espace ajusté entre label et input */
-    flex: 0 0 100px; /* Largeur constante pour les labels */
-    text-align: right; /* Alignement propre */
-}
-
-#resultatsG .input {
-    border: 1px solid #ccc;
-    padding: 10px; /* Champ plus grand */
-    border-radius: 5px;
-    width: 100%; /* Prend tout l'espace disponible */
-    box-sizing: border-box; /* Inclus le padding dans la largeur */
-    font-size: 16px; /* Texte plus grand */
-    flex: 1; /* Élargit automatiquement */
-}
-
-#resultatsG .input:focus {
-    border-color: #00ff1a; /* Bordure verte au focus */
-    outline: none;
-}
-
-@media (max-width: 768px) {
-    #resultatsG div {
-        flex-wrap: wrap; /* Les éléments passent à la ligne si nécessaire */
-        gap: 10px;
-    }
-
-    #resultatsG label {
-        flex: 1 0 100%; /* Les labels prennent toute la largeur */
-        margin-right: 0; /* Supprime l'espace à droite */
-        text-align: left; /* Alignement naturel */
-    }
-
-    #resultatsG .input {
-        flex: 1 0 100%; /* Les champs prennent toute la largeur */
-    }
-}
-
-
 
 
 
@@ -492,20 +426,21 @@
     </div>
 </div>
 <div id="resultatsG" style="margin-bottom: 10px;">
-        <!-- Bascule-->
-  <legend id="onesh" style="font-size: 1.0 em; font-weight: bold; margin-bottom: 10px;">One Shot € HT</legend>
-      
-          <div style="display: flex; align-items: center; margin-bottom: 15px;">
-            <div style="flex: 1; display: flex; align-items: center;">
-                <label for="distanceG" style="flex: 0 0 120px;">Distance</label>
-                <input type="text" id="distanceG" class="input" style="flex: 1; margin-left: 5px;" readonly />
-            </div>
-             <div style="flex: 1; display: flex; align-items: center;">
-                <label for="forfaitoneshot" style="flex: 0 0 120px;margin-left: 15px;">Forfait (€/t) </label>
-                <input type="text" id="forfaitoneshot" class="input" style="flex: 1; margin-left: 1px;" readonly />
-            </div>
-     </div>   
+    <!-- Cadre pour One Shot -->
+    <div style="display: flex; justify-content: space-between; padding: 15px; margin-bottom: 15px; border: 1px solid #00ff1a; border-radius: 8px; background-color: #e9fff9;">
+        <!-- Distance -->
+        <div style="flex: 1; display: flex; align-items: center; margin-right: 10px;">
+            <label for="distanceG" style="flex: 0 0 120px; font-weight: bold; font-size: 14px;">Distance</label>
+            <input type="text" id="distanceG" class="input" style="flex: 1; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;" readonly />
+        </div>
+        <!-- Forfait -->
+        <div style="flex: 1; display: flex; align-items: center;">
+            <label for="forfaitoneshot" style="flex: 0 0 120px; font-weight: bold; font-size: 14px;">Forfait (€/t)</label>
+            <input type="text" id="forfaitoneshot" class="input" style="flex: 1; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;" readonly />
+        </div>
+    </div>
 </div>
+
 <fieldset style="background-color: #f0f4fa; padding: 15px; border-radius: 8px;">
 <legend style="font-size: 1.0 em; font-weight: bold; margin-bottom: 10px;">Convertisseur Volume &rarr; Masse</legend>
     <!-- Largeur et Longueur pour calculer m² -->
