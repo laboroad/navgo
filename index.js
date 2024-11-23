@@ -411,36 +411,51 @@ const calculateDistanceAndTime = (origin, siteCoordinates) => {
             console.error("Error in fetching directions:", error);
         });
 };
+
+
+
 // Ajouter une fonction pour calculer le nombre de tours
 function calculateTours(duration, vehicleWeight) {
     const tempsTravail = parseFloat(document.getElementById('tempsTravail').value) || 480; // minutes
     const tempsArret = parseFloat(document.getElementById('tempsArret').value) || 15; // minutes
 
-    // Calculer le temps total pour un tour
-    const tempsParTour = (parseFloat(duration) * 2) + tempsArret; // en minutes
 
+// Vérifier si duration est valide
+    if (isNaN(duration) || duration <= 0) {
+        console.error("Erreur: La durée du trajet (duration) est invalide.");
+        return;
+    }
+
+    
+  // Calculer le temps total pour un tour
+    const tempsParTour = (parseFloat(duration) * 2) + tempsArret; // en minutes
+  if (tempsParTour === 0) {
+        console.error("Erreur: tempsParTour est égal à 0.");
+        return; // Sortir si tempsParTour est 0
+    }
+    
     // Calculer le nombre de tours
     const tours = Math.floor(tempsTravail / tempsParTour); // en minutes
-
-//pour decimal log 
-// Calculer le temps total pour un tour
-    const tempsParTourMax = (parseFloat(duration) * 2) + tempsArret; // en minutes
-    const toursMax = tempsTravail / tempsParTour; // cela peut donner un résultat décimal
-
-
     console.log(`Nombre de tours : ${tours}`); // Cela affichera le nombre total de tours
-    console.log("Nombre de tours max :", toursMax.toFixed(2)); // Affichage avec 2 décimales
 
-    // Afficher le résultat dans le champ Tours
-    // Afficher le résultat dans les champs appropriés
+     //  Calculer le nombre de tours max avec decimal
+    const toursMax = tempsTravail / tempsParTour; // Calculer le nombre de tours max en utilisant tempsParTourMax
+    console.log("Nombre de tours max :", toursMax.toFixed(2)); // Affichage avec 2 décimales
+    const toursMaxArrondi = Math.ceil(toursMax);
+    console.log("Nombre de tours max arrondi :", toursMaxArrondi);
+
+    // Afficher le résultat dans le champ Tours  et ToursMax
     document.getElementById('numToursInt').value = Math.floor(tours); // Tours entiers
     document.getElementById('numToursDecimal').value = toursMax.toFixed(2); // Tours avec décimales
+   document.getElementById("joursmax").textContent = `Si rotations : ${toursMaxArrondi}`;
+
 
     // Calculer le coût par tonne
-    calculerCoutParTonne(tours);
+   calculerCoutParTonne(tours, toursMaxArrondi);
+
 }
 
-function calculerCoutParTonne(tours) {
+function calculerCoutParTonne(tours, toursMaxArrondi) {
     const quantiteElement = document.getElementById('quantite');
     const prixTransportElement = document.getElementById('prixTransport');
     const coutParTonneElement = document.getElementById('coutParTonne');
@@ -505,11 +520,8 @@ function calculerCoutParTonne(tours) {
     // Calculer le nombre de jours pour livraison
     const joursPourLivraison = Math.ceil(quantite / (tours * poidsVehiculeLivraison));
 
-
     // Calculer le coût par tonne livrée
     const coutParTonne = (prixTransportParJour * joursPourLivraison) / quantite;
-
-    // Afficher le coût par tonne
     coutParTonneElement.value = coutParTonne.toFixed(2); // Affiche uniquement le coût
     coutParTonneDoubleFret.value = (coutParTonne / 2).toFixed(2); // Affiche uniquement le coût double fret
     
@@ -527,7 +539,7 @@ function calculerCoutParTonne(tours) {
     console.log("Prix Transport Element:", prixTransportParJour);
     console.log("Coût Par Tonne Element:", coutParTonne);
     console.log("Nombre de jours:", joursPourLivraison);
-
+   
 
 
 // Calcul du coût par tonne bascule (proportionnel)
@@ -541,7 +553,7 @@ const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quant
 
 document.getElementById("forfaitoneshot").value = forfaitTonneBasculeV.toFixed(2);
 document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
-document.getElementById("joursmax").textContent = `Nombre de jours : ${joursPourLivraison}`;
+ 
 
 }
 
