@@ -178,8 +178,8 @@
   <div class="form-container">
         <h1>Gestion des Missions Chauffeurs</h1>
         <div class="form-group">
-            <label for="chauffeur-name">Nom du Chauffeur</label>
-            <input type="text" id="chauffeur-name" value="DD">
+            <label for="chauffeur-name">Chantier</label>
+            <input type="text" id="chauffeur-name" value="">
         </div>
 
         <div class="form-group">
@@ -244,7 +244,7 @@
         let missions = [];
 
         function reinitialiserChamps() {
-            document.getElementById('chauffeur-name').value = 'DD';
+            document.getElementById('chauffeur-name').value = '';
             document.getElementById('tours-prevus').value = '1';
             document.getElementById('temps-aller').value = '0';
             document.getElementById('temps-retour').value = '0';
