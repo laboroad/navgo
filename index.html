@@ -284,27 +284,22 @@
     margin-bottom: 10px; /* Espacement entre chaque champ */
 }
 @media (max-width: 768px) {
-    #resultatsG {
-        padding: 10px;
-        box-shadow: none; /* Réduit l'ombre sur mobile */
+    #resultatsG div {
+        flex-wrap: wrap; /* Les éléments peuvent passer à la ligne */
+        gap: 10px;
     }
 
     #resultatsG label {
-        font-size: 12px; /* Réduit la taille des labels */
+        flex: 1 0 100%; /* Label prend toute la largeur */
+        text-align: left;
+        margin-right: 0; /* Supprime le décalage */
     }
 
     #resultatsG .input {
-        font-size: 12px; /* Réduit la taille des champs */
-    }
-
-    #resultatsG div {
-        flex-direction: column; /* Empile les champs verticalement sur petit écran */
-    }
-
-    #resultatsG label {
-        margin-bottom: 5px; /* Ajoute de l'espace entre label et champ */
+        flex: 1 0 100%; /* Input prend toute la largeur */
     }
 }
+
 
 
     </style>
