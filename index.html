@@ -168,6 +168,7 @@
     width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
     box-sizing: border-box; /* Inclut le padding dans la largeur totale */
 }
+
    
 #resultats fieldset {
     margin: 0 auto;
@@ -276,7 +277,19 @@
 
 /* Result display styling green */
 
-
+/* Nouveau style vert */
+.resultats-vert {
+    margin-top: 15px;
+    margin-bottom: 15px; /* Ajout d'un espacement sous le cadre */
+    padding: 5px; /* Espace à l'intérieur de la section */
+    border: 1px solid #00ff1a; /* Bordure verte */
+    border-radius: 5px;
+    background-color: #e9fff9; /* Fond vert clair */
+    box-shadow: 0 2px 5px rgba(0, 255, 26, 0.1); /* Ombre subtile */
+    max-width: 100%; /* Limite la largeur à 100% du parent */
+    width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
 
 
     </style>
@@ -355,8 +368,8 @@
 </div>
 <!-- Bouton Envoyer -->
 <button id="updateButton">Envoyer</button>
-
 <div id="resultats" style="margin-bottom: 10px;">
+
     <!-- Cadre supérieur pour Distance et Temps -->
     <div style="display: flex; justify-content: space-between; padding: 15px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; background-color: #f0f4fa;">
         <div style="flex: 1; display: flex; align-items: center; margin-right: 10px;">
@@ -367,7 +380,8 @@
             <label for="time" style="flex: 0 0 120px;">Temps</label>
             <input type="text" id="time" class="input" style="flex: 1; margin-left: 5px;" readonly />
         </div>
-    </div>
+   </div>
+   
     <!-- Conteneur principal avec 2 colonnes -->
     <div style="display: flex; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
         <!-- Colonne gauche -->
@@ -425,18 +439,16 @@
         </div>
     </div>
 </div>
-<div id="resultatsG" style="margin-bottom: 10px;">
-    <!-- Cadre pour One Shot -->
-    <div style="display: flex; justify-content: space-between; padding: 15px; margin-bottom: 15px; border: 1px solid #00ff1a; border-radius: 8px; background-color: #e9fff9;">
-        <!-- Distance -->
-        <div style="flex: 1; display: flex; align-items: center; margin-right: 10px;">
-            <label for="distanceG" style="flex: 0 0 120px; font-weight: bold; font-size: 14px;">Distance</label>
-            <input type="text" id="distanceG" class="input" style="flex: 1; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;" readonly />
-        </div>
-        <!-- Forfait -->
+ <!-- resultat green -->
+<div class="resultats-vert">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
         <div style="flex: 1; display: flex; align-items: center;">
-            <label for="forfaitoneshot" style="flex: 0 0 120px; font-weight: bold; font-size: 14px;">Forfait (€/t)</label>
-            <input type="text" id="forfaitoneshot" class="input" style="flex: 1; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;" readonly />
+            <label for="distanceG" style="flex: 0 0 120px;">Distance</label>
+            <input type="text" id="distanceG" class="input" style="flex: 1; margin-left: 5px;" readonly />
+        </div>
+        <div style="flex: 1; display: flex; align-items: center; margin-left: 10px;">
+            <label for="forfaitoneshot" style="flex: 0 0 120px;">Forfait (€/t)</label>
+            <input type="text" id="forfaitoneshot" class="input" style="flex: 1; margin-left: 5px;" readonly />
         </div>
     </div>
 </div>
