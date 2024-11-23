@@ -283,9 +283,28 @@
 #resultats input {
     margin-bottom: 10px; /* Espacement entre chaque champ */
 }
+@media (max-width: 768px) {
+    #resultatsG {
+        padding: 10px;
+        box-shadow: none; /* Réduit l'ombre sur mobile */
+    }
 
+    #resultatsG label {
+        font-size: 12px; /* Réduit la taille des labels */
+    }
 
+    #resultatsG .input {
+        font-size: 12px; /* Réduit la taille des champs */
+    }
 
+    #resultatsG div {
+        flex-direction: column; /* Empile les champs verticalement sur petit écran */
+    }
+
+    #resultatsG label {
+        margin-bottom: 5px; /* Ajoute de l'espace entre label et champ */
+    }
+}
 
 
     </style>
