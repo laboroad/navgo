@@ -160,9 +160,9 @@
     #resultats {
     margin-top: 15px;
     padding: 5px; /* Espace à l'intérieur de la section */
-    border: 1px solid #007bff; /* Bordure bleue */
+    border: 1px solid #ddd; /* Bordure bleue */
     border-radius: 5px;
-    background-color: #e9f7ff; /* Fond bleu clair */
+    background-color: #ffffff; /* Fond bleu clair */
     box-shadow: 0 2px 5px rgba(0, 123, 255, 0.1); /* Ombre subtile */
     max-width: 100%; /* Limite la largeur à 100% du parent */
     width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
@@ -347,7 +347,7 @@
 <div id="cadre2">
     <div class="input-group">
         <label for="quantite">Quantité (t/m³) :</label>
-        <input id="quantite" value="0" type="number" class="input short-input">
+        <input id="quantite" value="30" type="number" class="input short-input">
     </div>
     <div class="input-group">
         <label for="tempsArret">Temps d'arrêt (min) :</label>
@@ -441,7 +441,7 @@
 </div>
  <!-- resultat green -->
 <div class="resultats-vert">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; justify-content: space-between;  padding: 15px; margin-bottom: 5px;">
         <div style="flex: 1; display: flex; align-items: center; margin-left: 5px;">
             <label for="forfaitoneshot" style="flex: 0 0 230px;">Forfait HT (€/t)</label>
             <input type="text" id="forfaitoneshot" class="input" style="flex: 1; margin-left: 5px; margin-right: 5px;" readonly />
@@ -582,11 +582,11 @@ function updateValues() {
         document.getElementById("quantite").value = 30; // Mettre 30 dans la quantité (pour 30t)
     } else if (poids === "16t") { // Si 12t est sélectionné
         document.getElementById("prixTransport").value = 620; // Forfait transport
-        document.getElementById("tempsArret").value = 25; // Temps d'arrêt
+        document.getElementById("tempsArret").value = 20; // Temps d'arrêt
         document.getElementById("quantite").value = 16; // Mettre 16 dans la quantité (pour 16t)
     } else if (poids === "13t") { // Si 7.5t est sélectionné
         document.getElementById("prixTransport").value = 520; // Forfait transport
-        document.getElementById("tempsArret").value = 25; // Temps d'arrêt
+        document.getElementById("tempsArret").value = 20; // Temps d'arrêt
         document.getElementById("quantite").value = 13; // Mettre 13 dans la quantité (pour 13t)
     } 
 }

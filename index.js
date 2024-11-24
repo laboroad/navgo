@@ -539,7 +539,7 @@ function calculerCoutParTonne(tours, toursMaxArrondi) {
     console.log("Prix Transport Element:", prixTransportParJour);
     console.log("Coût Par Tonne Element:", coutParTonne);
     console.log("Nombre de jours:", joursPourLivraison);
-   
+   console.log("Nombre de jours +:", joursPourLivraisonAvecUnPlus);
 
 
 // Calcul du coût par tonne bascule (proportionnel)
