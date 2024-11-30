@@ -283,10 +283,10 @@
             });
 
             let tempsRestant = tempsTotalRestant - totalTemps;
-            document.getElementById('total-temps').textContent = `Temps total : ${Math.floor(totalTemps / 60)}h ${totalTemps % 60}min`;
+            document.getElementById('total-temps').textContent = `Temps utilisé : ${Math.floor(totalTemps / 60)}h ${totalTemps % 60}min`;
+            document.getElementById('temps-restant').textContent = `Temps restant : ${Math.floor(tempsRestant / 60)}h ${tempsRestant % 60}min`;
             document.getElementById('total-montant').textContent = `Montant total : ${totalMontant.toFixed(2)} €`;
-            document.getElementById('temps-restant').textContent = `Temps restant avant 8h : ${Math.floor(tempsRestant / 60)}h ${tempsRestant % 60}min`;
-
+           
             // Si dépassement des 8h ou montant supérieur à 680 €, mettre en rouge
             if (totalTemps > tempsTotalRestant || totalMontant > 680) {
                 document.getElementById('total-temps').classList.add('red');
