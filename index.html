@@ -319,7 +319,7 @@
 	<option value="Carrière de Brens">Brens</option>
 	<option value="Gagnac">Gagnac</option>
 	<option value="Gradilles">Gradilles</option>
-	<option value="isle-sur-Tarn">isle-sur-Tarn</option>
+	<option value="isle-sur-Tarn">Lisle-sur-Tarn</option>
 	<option value="Ondes">Ondes</option>
 	<option value="Paulinet">Paulinet</option>
 	<option value="Sablière de Lexos">Sablière de Lexos</option>
@@ -373,11 +373,11 @@
     <!-- Cadre supérieur pour Distance et Temps -->
     <div style="display: flex; justify-content: space-between; padding: 15px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; background-color: #f0f4fa;">
         <div style="flex: 1; display: flex; align-items: center; margin-right: 10px;">
-            <label for="distance" style="flex: 0 0 120px;">Distance</label>
+            <label for="distance" style="flex: 0 0 120px;">Distance (km)</label>
             <input type="text" id="distance" class="input" style="flex: 1; margin-left: 5px;" readonly />
         </div>
         <div style="flex: 1; display: flex; align-items: center;">
-            <label for="time" style="flex: 0 0 120px;">Temps</label>
+            <label for="time" style="flex: 0 0 120px;">Temps (min)</label>
             <input type="text" id="time" class="input" style="flex: 1; margin-left: 5px;" readonly />
         </div>
    </div>
@@ -400,7 +400,7 @@
             <p><strong>Prix :</strong></p>
             <div style="display: flex; align-items: center; margin-bottom: 15px;">
                 <label for="coutParTonne" style="flex: 0 0 120px;">Coût (€/t)</label>
-                <input type="text" id="coutParTonne" class="input" style="flex: 1; margin-left: 5px;" readonly />
+                <input type="text" id="coutParTonne" class="input" style="flex: 1; margin-left: 5px; font-weight: bold;" readonly />
             </div>
 
             <!-- Double Fret -->
@@ -439,15 +439,50 @@
         </div>
     </div>
 </div>
- <!-- resultat green -->
+<!-- Résultat green -->
 <div class="resultats-vert">
-    <div style="display: flex; align-items: center; justify-content: space-between;  padding: 15px; margin-bottom: 5px;">
-        <div style="flex: 1; display: flex; align-items: center; margin-left: 5px;">
-            <label for="forfaitoneshot" style="flex: 0 0 230px;">Forfait HT (€/t)</label>
-            <input type="text" id="forfaitoneshot" class="input" style="flex: 1; margin-left: 5px; margin-right: 5px;" readonly />
-        </div>
+    <!-- Forfait HT -->
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 5px; margin-bottom: 5px;">
+        <label for="forfaitoneshot" id="forfait-label" style="flex: 0 0 230px;">Forfait HT (€/t)</label>
+        <input type="text" id="forfaitoneshot" class="input" style="flex: 1; margin-left: 5px; margin-right: 5px;" readonly />
+    </div>
+    <!-- Quantité Livrée -->
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 5px;">
+        <label for="quantitelivre" id="quantite-label" style="flex: 0 0 230px;">Quantité Livrée</label>
+        <input type="number" id="quantitelivre" class="input" style="flex: 1; margin-left: 5px; margin-right: 5px;" />
     </div>
 </div>
+
+<script>
+    document.getElementById('quantitelivre').addEventListener('input', function () {
+        const forfait = parseFloat(document.getElementById('forfaitoneshot').value) || 0;
+        const quantite = parseFloat(this.value) || 0;
+        const label = document.getElementById('quantite-label');
+        
+        if (quantite > 0) {
+            const coutUnitaire = (forfait / quantite).toFixed(2);
+             label.textContent = `Prix à la tonne : ${coutUnitaire} € HT`;
+        } else {
+            label.textContent = "Quantité Livrée";
+        }
+    });
+</script>
+<script>
+    document.getElementById('quantitelivre').addEventListener('input', function () {
+        const forfait = parseFloat(document.getElementById('forfaitoneshot').value) || 0;
+        const quantite = parseFloat(this.value) || 0;
+        const coutUnitaire = quantite > 0 ? (forfait / quantite).toFixed(2) : 0;
+        document.getElementById('coutunitaire').textContent = coutUnitaire;
+    });
+</script>
+<script>
+    document.getElementById('quantitelivre').addEventListener('input', function () {
+        const forfait = parseFloat(document.getElementById('forfaitoneshot').value) || 0;
+        const quantite = parseFloat(this.value) || 0;
+        const coutUnitaire = quantite > 0 ? (forfait / quantite).toFixed(2) : 0;
+        document.getElementById('coutunitaire').textContent = coutUnitaire;
+    });
+</script>
 
 <fieldset style="background-color: #f0f4fa; padding: 15px; border-radius: 8px;">
 <legend style="font-size: 1.0 em; font-weight: bold; margin-bottom: 10px;">Convertisseur Volume &rarr; Masse</legend>
@@ -462,8 +497,8 @@
     </div>
     <!-- Surface calculée en m² -->
     <div class="input-group">
-        <label for="surface">m² :</label>
-        <input type="number" id="surface" class="input short-input" placeholder="Surface en m²" oninput="convertirDepuisSurface()" />
+        <label for="surface">Surface en mètre carré m² :</label>
+        <input type="number" id="surface" class="input short-input" placeholder="Surface m²" oninput="convertirDepuisSurface()" />
     </div>
     <!-- Hauteur en cm -->
   <!-- Hauteur en cm -->
@@ -473,8 +508,8 @@
     </div> 
     <!-- Volume calculé en m³ -->
     <div class="input-group">
-        <label for="m3">m<sup>3</sup> :</label>
-        <input type="number" id="m3" class="input short-input" placeholder="Volume en m³" oninput="convertir('m3')" />
+        <label for="m3">Volume en mètre cube <sup>m³</sup> :</label>
+        <input type="number" id="m3" class="input short-input" placeholder="Volume m³" oninput="convertir('m3')" />
     </div>
     <!-- Densité pour convertir en tonnes -->
     <div class="input-group">
@@ -586,7 +621,7 @@ function updateValues() {
         document.getElementById("quantite").value = 16; // Mettre 16 dans la quantité (pour 16t)
     } else if (poids === "13t") { // Si 7.5t est sélectionné
         document.getElementById("prixTransport").value = 520; // Forfait transport
-        document.getElementById("tempsArret").value = 20; // Temps d'arrêt
+        document.getElementById("tempsArret").value = 25; // Temps d'arrêt
         document.getElementById("quantite").value = 13; // Mettre 13 dans la quantité (pour 13t)
     } 
 }

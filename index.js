@@ -394,9 +394,10 @@ const calculateDistanceAndTime = (origin, siteCoordinates) => {
             if (data.routes.length > 0) {
                 const distance = (data.routes[0].distance / 1000).toFixed(2); // Convertir en km
                 const duration = (data.routes[0].duration / 60).toFixed(0); // Convertir en minutes
-                document.getElementById("distance").value = `${distance} km`;
+                document.getElementById("distance").value = `${distance}`;
               //  document.getElementById("distanceG").value = `${distance} km`;
-                document.getElementById("time").value = `${duration} minutes`;
+                document.getElementById("time").value = `${duration}`;
+               //document.getElementById("time").value = `${duration} minutes`;
 
              // Appeler la fonction pour afficher la route entre l'origine et le site
                 displayRoute(origin, siteCoordinates);
@@ -549,12 +550,20 @@ const coutParTonneBasculeV = (prixTransportParJour /  quantiteVirtuelle);
 const forfaitTonneBasculeV = (prixTransportParJour /  quantiteVirtuelle) * quantite;
 console.log("forfaitTonneBasculeV:", forfaitTonneBasculeV);
 const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quantiteVirtuelle;
+// Met à jour la valeur dans l'input forfait
+const inputField = document.getElementById("forfaitoneshot");
+inputField.value = forfaitTonneBasculeV.toFixed(2);
+// Ajoute la logique pour vérifier la valeur et si livraison inferieur à 65 € applique 65€
+const labelField = document.getElementById("forfait-label");
+if (forfaitTonneBasculeV < 65) {
+inputField.value = 65;
+} else {
+    // Styles par défaut si la valeur est correcte
+inputField.value = forfaitTonneBasculeV.toFixed(2);
 
+}
 
-document.getElementById("forfaitoneshot").value = forfaitTonneBasculeV.toFixed(2);
 document.getElementById("jours").textContent = `Nombre de jours : ${joursPourLivraison}`;
- 
-
 }
 
 // Fonction pour afficher le message d'erreur et scroller vers l'erreur
