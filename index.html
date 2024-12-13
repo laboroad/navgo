@@ -205,28 +205,38 @@
     width: 150px; /* Spécifiez la largeur que vous voulez */
 }
 
-.floating-button {
-    position: absolute;
-    bottom: 20px; /* Ajuste la distance par rapport au bas */
-    right: 20px; /* Ajuste la distance par rapport à la droite */
-    background-color: #007bff; /* Couleur de fond */
-    color: white; /* Couleur du texte */
-    border: none;
-    border-radius: 50%; /* Pour un bouton circulaire */
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    z-index: 1000; /* Assure que le bouton est au-dessus de la carte */
-}
+ .floating-button {
+            position: absolute;
+            bottom: 20px; /* Ajuste la distance par rapport au bas */
+            right: 20px; /* Ajuste la distance par rapport à la droite */
+            background-color: #007bff; /* Couleur de fond bleu */
+            color: white; /* Couleur du texte */
+            border: none;
+            border-radius: 50%; /* Pour un bouton circulaire */
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000; /* Assure que le bouton est au-dessus de la carte */
+        }
 
-.floating-button:hover {
-    background-color: #0056b3; /* Couleur survolée */
-}
+        .floating-button:hover {
+            background-color: #0056b3; /* Couleur survolée (bleu plus foncé) */
+        }
+
+        /* Styles spécifiques pour le bouton rouge */
+        .floating-button-red {
+            background-color: #dd7522; /* Couleur de GDO*/
+            bottom: 80px; /* Positionne le bouton rouge juste au-dessus du bouton bleu */
+        }
+
+        .floating-button-red:hover {
+            background-color: #a45719; /* Couleur survolée pour le bouton gdo*/
+        }
 
 @media (max-width: 768px) {
     .input {
@@ -298,6 +308,11 @@
 <body
     <div class='container'>
         <div class='map' id='map'>
+
+  <!-- Bouton rouge qui redirige vers la page price.html -->
+        <button class="floating-button floating-button-red" onclick="window.location.href='price.html';">
+            <span>+</span>
+        </button>
 <!-- Floating button -->
         <button class="floating-button" onclick="openNewPage()">+</button>
 </div>
