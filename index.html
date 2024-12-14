@@ -27,22 +27,7 @@
             max-width: 200px;
         }
     </style>
-<script>
-    const pass = localStorage.getItem("auth-pass");
-    const GDO = "gdo";
-    if (pass && pass.toLowerCase() === GDO.toLowerCase()) {
-        window.location.href = "/htm/navgo.html";
-    } else {
-        // Sinon, demander le mot de passe
-        const userInput = prompt("Mot de passe requis :");
-        if (userInput && userInput.toLowerCase() === GDO.toLowerCase()) {
-            localStorage.setItem("auth-pass", userInput); 
-            window.location.href = "/htm/navgo.html"; // Rediriger après validation
-        } else {
-            document.body.innerHTML = "<h1>Accès refusé</h1>";
-        }
-    }
-</script>
+
 
 </head>
 <body>
