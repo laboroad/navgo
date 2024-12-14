@@ -29,23 +29,25 @@
             max-width: 200px;
         }
     </style>
-<script>
-    const pass = localStorage.getItem("auth-pass");
-    const GDO = "gdo";
-    if (pass && pass.toLowerCase() === GDO.toLowerCase()) {
-        window.location.href = "/htm/navgo.html";
-    } else {
-        // Sinon, demander le mot de passe
-        const userInput = prompt("Mot de passe requis :");
-        if (userInput && userInput.toLowerCase() === GDO.toLowerCase()) {
-            localStorage.setItem("auth-pass", userInput); 
-            window.location.href = "/htm/navgo.html"; // Rediriger après validation
-        } else {
-            document.body.innerHTML = "<h1>Accès refusé</h1>";
+  <script>
+        const GDO = "gdo";
+        // Vérifier si le mot de passe est déjà stocké
+        const pass = localStorage.getItem("auth-pass");
+        if (pass && pass.toLowerCase() === GDO.toLowerCase()) {
+            window.location.href = "/htm/navgo.html"; // Rediriger si le mot de passe est déjà valide
         }
-    }
-</script>
 
+        // Fonction pour vérifier le mot de passe depuis le formulaire
+        function verifierMotDePasse() {
+            const userInput = document.getElementById("password").value; // Récupère la valeur de l'input
+            if (userInput && userInput.toLowerCase() === GDO.toLowerCase()) {
+                localStorage.setItem("auth-pass", userInput); // Stocker le mot de passe
+                window.location.href = "/htm/navgo.html"; // Rediriger vers la page sécurisée
+            } else {
+                alert("Mot de passe incorrect !");
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
