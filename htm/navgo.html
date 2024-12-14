@@ -310,7 +310,7 @@
         <div class='map' id='map'>
 
   <!-- Bouton rouge qui redirige vers la page price.html -->
-        <button class="floating-button floating-button-red" onclick="window.location.href='price.html';">
+        <button class="floating-button floating-button-red" onclick="window.open('price.html', '_blank');">
             <span>+</span>
         </button>
 <!-- Floating button -->
@@ -642,7 +642,9 @@ function updateValues() {
 }
 
 function openNewPage() {
-        window.location.href = 'valo.html'; // Redirige vers la nouvelle page
+       // window.location.href = 'valo.html'; // Redirige vers la nouvelle page
+        window.open('valo.html', '_blank'); // Ouvre la page "valo.html" dans un nouvel onglet
+
     }
 
     document.addEventListener('DOMContentLoaded', function() {
