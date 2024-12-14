@@ -30,10 +30,8 @@
 <script>
     const pass = localStorage.getItem("auth-pass");
     const GDO = "gdo";
-
     if (pass && pass.toLowerCase() === GDO.toLowerCase()) {
-        // Si le mot de passe est déjà dans localStorage et correct, rediriger vers navgo.html
-        window.location.href = "navgo.html";
+        window.location.href = "/htm/navgo.html";
     } else {
         // Sinon, demander le mot de passe
         const userInput = prompt("Mot de passe requis :");
