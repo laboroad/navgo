@@ -1,0 +1,178 @@
+/* styles.css */
+
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Couleur de fond légère */
+}
+
+.container {
+    display: flex;
+    flex-direction: row; /* Layout en ligne par défaut pour les grands écrans */
+    height: 100vh;
+}
+
+.map {
+    flex-grow: 2; /* La carte prend 2/3 de l'espace */
+    position: relative;
+    min-height: 300px; /* Hauteur minimale de la carte */
+}
+
+.sidebar {
+    flex-grow: 1; /* La sidebar prend 1/3 de l'espace */
+    padding: 20px;
+    background-color: white;
+    border-top: 1px solid #ccc; /* Bordure en haut */
+    overflow-y: auto; /* Rendre défilable si contenu long */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+}
+
+h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2rem; /* Utiliser rem pour une échelle cohérente */
+}
+
+/* Boutons */
+#updateButton, #calculer {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem; /* Taille de police cohérente */
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Ombre sur les boutons */
+}
+
+#updateButton:hover, #calculer:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Effet de survol */
+}
+
+/* Champs de saisie (inputs) */
+.input {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    font-size: 1rem;
+}
+
+.short-input {
+    width: 100%;
+}
+
+.input:focus {
+    border-color: #007bff; /* Mettre en évidence lors du focus */
+    outline: none;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 1rem;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    background-color: #f9f9f9;
+}
+
+.input-group {
+    margin-bottom: 12px;
+}
+
+.horizontal-list {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* Container des inputs avec un espacement supplémentaire */
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+.temps-label {
+    margin-left: 10px;
+}
+
+/* Dropdown des suggestions */
+#suggestions {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    position: absolute;
+    z-index: 1000;
+}
+
+#suggestions li {
+    padding: 8px;
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Styles spécifiques pour les petits écrans, par exemple en dessous de 768px de largeur */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Passer en colonne pour les petits écrans */
+    }
+
+    .map {
+        order: 1; /* La carte passe en premier */
+        flex: 1;
+        height: 50vh; /* La carte prend 50% de l'écran sur mobile */
+    }
+
+    .sidebar {
+        order: 2; /* La sidebar passe après */
+        flex: 1;
+        height: 50vh; /* La sidebar prend 50% de l'écran sur mobile */
+        overflow-y: auto; /* Permettre le défilement si le contenu dépasse */
+    }
+}
+
+/* Responsive design pour les plus grands écrans */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row; /* Layout en ligne pour les grands écrans */
+    }
+
+    .map {
+        flex-grow: 2; /* La carte prend 2/3 de l'espace */
+        height: auto; /* Carte pleine hauteur */
+    }
+
+    .sidebar {
+        flex-grow: 1; /* La sidebar prend 1/3 de l'espace */
+        height: auto; /* Sidebar pleine hauteur */
+    }
+}
