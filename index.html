@@ -34,7 +34,7 @@
         // Vérifier si le mot de passe est déjà stocké
         const pass = localStorage.getItem("auth-pass");
         if (pass && pass.toLowerCase() === GDO.toLowerCase()) {
-            window.location.href = "/htm/navgo.html"; // Rediriger si le mot de passe est déjà valide
+            window.location.href = "htm/navgo.html"; // Rediriger si le mot de passe est déjà valide
         }
 
         // Fonction pour vérifier le mot de passe depuis le formulaire
@@ -42,7 +42,7 @@
             const userInput = document.getElementById("password").value; // Récupère la valeur de l'input
             if (userInput && userInput.toLowerCase() === GDO.toLowerCase()) {
                 localStorage.setItem("auth-pass", userInput); // Stocker le mot de passe
-                window.location.href = "/htm/navgo.html"; // Rediriger vers la page sécurisée
+                window.location.href = "htm/navgo.html"; // Rediriger vers la page sécurisée
             } else {
                 alert("Mot de passe incorrect !");
             }
