@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .logo {
+            margin: 20px 0;
+        }
+        .logo img {
+            max-width: 200px;
+        }
+    </style>
+<script>
+    const pass = localStorage.getItem("auth-pass");
+    const GDO = "gdo";
+
+    if (pass && pass.toLowerCase() === GDO.toLowerCase()) {
+        // Si le mot de passe est déjà dans localStorage et correct, rediriger vers navgo.html
+        window.location.href = "navgo.html";
+    } else {
+        // Sinon, demander le mot de passe
+        const userInput = prompt("Mot de passe requis :");
+        if (userInput && userInput.toLowerCase() === GDO.toLowerCase()) {
+            localStorage.setItem("auth-pass", userInput); 
+            window.location.href = "/htm/navgo.html"; // Rediriger après validation
+        } else {
+            document.body.innerHTML = "<h1>Accès refusé</h1>";
+        }
+    }
+</script>
+
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur NavGo</h1>
+    </header>
+
+    <div class="logo">
+        <img src="./img/gdo.png" alt="Logo du site">
+    </div>
+
+    <p>Merci de vous connecter pour accéder à la navigation avancée.</p>
+
+    <form onsubmit="event.preventDefault(); verifierMotDePasse();">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Se connecter</button>
+    </form>
+</body>
+</html>

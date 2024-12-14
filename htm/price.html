@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue des Produits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #dd7522;
+        }
+
+        select, table {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #dd7522;
+            color: #fff;
+        }
+
+        img {
+            max-width: 50px;
+            height: auto;
+        }
+
+        /* Media Queries pour une meilleure adaptation aux petits écrans */
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            select, table {
+                padding: 8px;
+            }
+
+            th, td {
+                font-size: 14px;
+            }
+
+            img {
+                max-width: 40px; /* Réduit la taille des images sur les petits écrans */
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            h1 {
+                font-size: 1.2em;
+            }
+
+            select, table {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Catalogue des Produits</h1>
+
+        <label for="site">Sélectionnez un site :</label>
+        <select id="site">
+            <option value="">-- Choisissez un site --</option>
+        </select>
+
+        <label for="segment">Sélectionnez un segment :</label>
+        <select id="segment">
+            <option value="">-- Choisissez un segment --</option>
+        </select>
+
+        <label for="libelle">Sélectionnez un produit :</label>
+        <select id="libelle">
+            <option value="">-- Choisissez un produit --</option>
+        </select>
+
+        <table id="details" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Nature</th>
+                    <th>Couleur</th>
+                    <th>Utilisation</th>
+                    <th>Prix HT Hors TGAP</th>
+                    <th>Prix HT + TGAP</th>
+                    <th>Prix HT + TGAP + REP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Contenu dynamique inséré ici -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
