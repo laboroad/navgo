@@ -446,19 +446,18 @@ libelleSelect.addEventListener("change", () => {
     const segment = segmentSelect.value;
     const libelle = libelleSelect.value;
 
-    // Trouver le produit
     const produit = produits.find(p => p.site === site && p.segment === segment && p.libelle === libelle);
 
     if (produit) {
         detailsBody.innerHTML = `
             <tr>
-                <td><img src="${produit.image}" alt="Image"></td>
-                <td>${produit.nature}</td>
-                <td>${produit.couleur}</td>
-                <td>${produit.utilisation}</td>
-                <td>${produit.prix_hors_tgap}</td>
-                <td>${produit.prix_tgap}</td>
-                <td>${produit.prix_tgap_rep}</td>
+                <td data-label="Image"><img src="${produit.image}" alt="Image"></td>
+                <td data-label="Nature">${produit.nature}</td>
+                <td data-label="Couleur">${produit.couleur}</td>
+                <td data-label="Utilisation">${produit.utilisation}</td>
+                <td data-label="Prix HT Hors TGAP">${produit.prix_hors_tgap}</td>
+                <td data-label="Prix HT + TGAP">${produit.prix_tgap}</td>
+                <td data-label="Prix HT + TGAP + REP">${produit.prix_tgap_rep}</td>
             </tr>
         `;
         detailsTable.style.display = "table";

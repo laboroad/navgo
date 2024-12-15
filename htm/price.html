@@ -27,7 +27,7 @@
             color: #dd7522;
         }
 
-        select {
+        select, table {
             width: 100%;
             margin: 10px 0;
             padding: 10px;
@@ -36,10 +36,7 @@
         }
 
         table {
-            width: 100%;
-            margin: 10px 0;
             border-collapse: collapse;
-            display: none; /* Le tableau est masqué par défaut */
         }
 
         th, td {
@@ -58,19 +55,44 @@
             height: auto;
         }
 
-        /* Styles adaptatifs */
+        /* Styles pour le tableau en disposition verticale sur mobile */
         @media screen and (max-width: 600px) {
             table {
                 display: block;
-                overflow-x: auto;
+                border: none;
             }
 
-            th, td {
+            thead {
+                display: none;
+            }
+
+            tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            td {
+                display: block;
+                text-align: right;
                 font-size: 14px;
+                padding: 5px 10px;
+                border: none;
+                border-bottom: 1px solid #ddd;
             }
 
-            img {
-                max-width: 40px;
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td:before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: capitalize;
             }
         }
     </style>
@@ -94,7 +116,7 @@
             <option value="">-- Choisissez un produit --</option>
         </select>
 
-        <table id="details">
+        <table id="details" style="display: none;">
             <thead>
                 <tr>
                     <th>Image</th>
@@ -107,7 +129,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Contenu dynamique ajouté via script.js -->
+                <!-- Contenu dynamique inséré ici -->
             </tbody>
         </table>
     </div>
