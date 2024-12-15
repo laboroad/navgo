@@ -27,7 +27,7 @@
             color: #dd7522;
         }
 
-        select, table {
+        select {
             width: 100%;
             margin: 10px 0;
             padding: 10px;
@@ -36,7 +36,10 @@
         }
 
         table {
+            width: 100%;
+            margin: 10px 0;
             border-collapse: collapse;
+            display: none; /* Le tableau est masqué par défaut */
         }
 
         th, td {
@@ -55,18 +58,11 @@
             height: auto;
         }
 
-        /* Media Queries pour une meilleure adaptation aux petits écrans */
+        /* Styles adaptatifs */
         @media screen and (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-
-            select, table {
-                padding: 8px;
+            table {
+                display: block;
+                overflow-x: auto;
             }
 
             th, td {
@@ -74,18 +70,7 @@
             }
 
             img {
-                max-width: 40px; /* Réduit la taille des images sur les petits écrans */
-            }
-        }
-
-        @media screen and (max-width: 400px) {
-            h1 {
-                font-size: 1.2em;
-            }
-
-            select, table {
-                font-size: 12px;
-                padding: 6px;
+                max-width: 40px;
             }
         }
     </style>
@@ -109,7 +94,7 @@
             <option value="">-- Choisissez un produit --</option>
         </select>
 
-        <table id="details" style="display: none;">
+        <table id="details">
             <thead>
                 <tr>
                     <th>Image</th>
@@ -122,7 +107,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Contenu dynamique inséré ici -->
+                <!-- Contenu dynamique ajouté via script.js -->
             </tbody>
         </table>
     </div>
