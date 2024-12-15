@@ -451,7 +451,7 @@ libelleSelect.addEventListener("change", () => {
     if (produit) {
         detailsBody.innerHTML = `
             <tr>
-                <td data-label="Image"><img src="${produit.image}" alt=" "></td>   <!-- alt="Image"></td>  --> 
+                <td data-label="Image"><img src="${produit.image}" alt="Image"></td>
                 <td data-label="Nature">${produit.nature}</td>
                 <td data-label="Couleur">${produit.couleur}</td>
                 <td data-label="Utilisation">${produit.utilisation}</td>
