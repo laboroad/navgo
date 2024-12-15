@@ -6,95 +6,103 @@
     <title>Catalogue des Produits</title>
     <link rel="icon" href="img/gdo.ico" type="image/x-icon">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 20px;
-        }
+     body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        h1 {
-            text-align: center;
-            color: #dd7522;
-        }
+h1 {
+    text-align: center;
+    color: #dd7522;
+}
 
-        select, table {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+select, table {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
-        table {
-            border-collapse: collapse;
-        }
+table {
+    border-collapse: collapse;
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color: #333; /* Texte par défaut en noir foncé */
+}
 
-        th {
-            background-color: #dd7522;
-            color: #fff;
-        }
+th {
+    background-color: #dd7522;
+    color: #fff;
+}
 
-        img {
-            max-width: 50px;
-            height: auto;
-        }
+td {
+    font-size: 14px; /* Assurez une bonne lisibilité */
+}
 
-        /* Styles pour le tableau en disposition verticale sur mobile */
-        @media screen and (max-width: 600px) {
-            table {
-                display: block;
-                border: none;
-            }
+img {
+    max-width: 50px;
+    height: auto;
+}
 
-            thead {
-                display: none;
-            }
+/* Styles pour le tableau en disposition verticale sur mobile */
+@media screen and (max-width: 600px) {
+    table {
+        display: block;
+        border: none;
+    }
 
-            tr {
-                display: block;
-                margin-bottom: 15px;
-                border: 1px solid #ddd;
-                padding: 10px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
+    thead {
+        display: none;
+    }
 
-            td {
-                display: block;
-                text-align: right;
-                font-size: 14px;
-                padding: 5px 10px;
-                border: none;
-                border-bottom: 1px solid #ddd;
-            }
+    tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-            td:last-child {
-                border-bottom: none;
-            }
+    td {
+        display: block;
+        text-align: right;
+        font-size: 14px;
+        padding: 5px 10px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        color: #000; /* Texte en noir sur mobile */
+    }
 
-            td:before {
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                text-transform: capitalize;
-            }
-        }
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: capitalize;
+        color: #555; /* Etiquette en gris pour différencier des données */
+    }
+}
+
     </style>
 </head>
 <body>
