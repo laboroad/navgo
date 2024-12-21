@@ -6,7 +6,7 @@
     <title>Missions Chauffeurs</title>
     <link rel="icon" href="img/gdo.ico" type="image/x-icon">
     <style>
-        /* Styles restent inchangés */
+        /* Styles généraux */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7fc;
@@ -15,32 +15,31 @@
             padding: 0;
         }
         .form-container {
-            width: 80%;
+            width: 90%;
             max-width: 1200px;
             margin: 30px auto;
-            padding: 30px;
+            padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
         }
-
         .form-section {
             flex: 1;
+            min-width: 300px;
         }
-
         .list-section {
             flex: 1.5;
+            min-width: 300px;
         }
-
         h1, h2 {
             font-size: 24px;
             color: #333;
             margin-bottom: 20px;
             text-align: center;
         }
-
         .form-group {
             margin-bottom: 15px;
             display: flex;
@@ -50,14 +49,12 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
         .form-group label {
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 14px;
             color: #555;
         }
-
         .form-group input {
             padding: 8px;
             font-size: 14px;
@@ -66,11 +63,9 @@
             outline: none;
             transition: border-color 0.3s;
         }
-
         .form-group input:focus {
             border-color: #007bff;
         }
-
         .form-group button {
             background-color: #007bff;
             color: #fff;
@@ -81,23 +76,19 @@
             font-size: 16px;
             transition: background-color 0.3s;
         }
-
         .form-group button:hover {
             background-color: #0056b3;
         }
-
         .form-group .error {
             color: #e74c3c;
             font-size: 14px;
             margin-top: 8px;
         }
-
         .mission-list {
             margin-top: 30px;
             border-top: 2px solid #ddd;
             padding-top: 20px;
         }
-
         .mission-item {
             display: flex;
             justify-content: space-between;
@@ -107,7 +98,6 @@
             margin-bottom: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-
         .mission-item button {
             background-color: #e74c3c;
             color: #fff;
@@ -117,19 +107,15 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         .mission-item button.edit-btn {
             background-color: #f39c12;
         }
-
         .mission-item button:hover {
             background-color: #c0392b;
         }
-
         .mission-item button.edit-btn:hover {
             background-color: #e67e22;
         }
-
         .total-container {
             margin-top: 40px;
             padding: 20px;
@@ -137,24 +123,20 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-
         .total-container h3 {
             font-size: 20px;
             margin-bottom: 20px;
             text-align: center;
         }
-
         .total-container p {
             font-size: 16px;
             font-weight: 600;
             margin: 8px 0;
             text-align: center;
         }
-
         .total-container .red {
             color: #e74c3c;
         }
-
         .reinitialiser-btn {
             background-color: #f39c12;
             color: white;
@@ -165,16 +147,70 @@
             transition: background-color 0.3s;
             font-size: 16px;
         }
-
         .reinitialiser-btn:hover {
             background-color: #e67e22;
         }
-
         .button-container {
             display: flex;
             justify-content: space-between;
             gap: 20px;
             width: 100%;
+        }
+
+        /* Médias queries pour les petits écrans (mobiles) */
+        @media (max-width: 768px) {
+            .form-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .form-section, .list-section {
+                min-width: 100%;
+            }
+            h1, h2 {
+                font-size: 20px;
+            }
+            .form-group input {
+                font-size: 16px;
+                padding: 10px;
+            }
+            .form-group button {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .mission-item {
+                flex-direction: column;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .mission-item button {
+                width: 100%;
+                padding: 10px;
+                margin-top: 10px;
+            }
+            .total-container {
+                padding: 15px;
+            }
+            .total-container h3 {
+                font-size: 18px;
+            }
+            .total-container p {
+                font-size: 14px;
+            }
+        }
+
+        /* Médias queries pour les très petits écrans (mobiles très petits) */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 10px;
+            }
+            .form-group input, .form-group button {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .form-group button {
+                font-size: 12px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -331,35 +367,42 @@
             const quantiteTransportee = parseFloat(document.getElementById('quantite-transportee').value);
             const prixTransport = parseFloat(document.getElementById('prix-transport').value);
 
-            const tempsTotal = toursPrevus * (tempsAller + tempsRetour + tempsChargement);
-            const montantMission = quantiteTransportee * prixTransport;
-
-            if (missionEnCours !== null) {
-                // Mise à jour d'une mission existante
-                missions[missionEnCours] = {
-                    chauffeur: chauffeurName,
-                    toursPrevus: toursPrevus,
-                    tempsTotal: tempsTotal,
-                    montantMission: montantMission
-                };
-                missionEnCours = null;
-            } else {
-                // Ajouter une nouvelle mission
-                missions.push({
-                    chauffeur: chauffeurName,
-                    toursPrevus: toursPrevus,
-                    tempsAller: tempsAller,
-                    tempsRetour: tempsRetour,
-                    tempsChargement: tempsChargement,
-                    quantiteTransportee: quantiteTransportee,
-                    prixTransport: prixTransport,
-                    tempsTotal: tempsTotal,
-                    montantMission: montantMission
-                });
+            if (!chauffeurName || isNaN(toursPrevus) || toursPrevus <= 0 || isNaN(tempsAller) || isNaN(tempsRetour) || isNaN(tempsChargement) || isNaN(quantiteTransportee) || isNaN(prixTransport)) {
+                document.getElementById('warning').textContent = 'Veuillez remplir tous les champs correctement.';
+                return;
             }
 
-            reinitialiserChamps();
+            const tempsTotal = tempsAller + tempsRetour + (toursPrevus * tempsChargement);
+            const montantMission = quantiteTransportee * prixTransport;
+
+            const mission = {
+                chauffeur: chauffeurName,
+                toursPrevus,
+                tempsAller,
+                tempsRetour,
+                tempsChargement,
+                quantiteTransportee,
+                prixTransport,
+                tempsTotal,
+                montantMission
+            };
+
+            if (missionEnCours !== null) {
+                missions[missionEnCours] = mission;
+                missionEnCours = null;
+            } else {
+                missions.push(mission);
+            }
+
             updateMissionList();
+            reinitialiserChamps();
+        });
+
+        document.getElementById('export-excel').addEventListener('click', function() {
+            const ws = XLSX.utils.json_to_sheet(missions);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Missions');
+            XLSX.writeFile(wb, 'missions.xlsx');
         });
 
         function modifierMission(index) {
@@ -379,23 +422,7 @@
             updateMissionList();
         }
 
-        document.getElementById('reinitialiser').addEventListener('click', function() {
-            reinitialiserChamps();
-        });
-
-        // Fonction pour exporter en Excel
-        document.getElementById('export-excel').addEventListener('click', function() {
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.json_to_sheet(missions.map(mission => ({
-                Chauffeur: mission.chauffeur,
-                'Tours Prévu': mission.toursPrevus,
-                'Temps Total (min)': mission.tempsTotal,
-                Montant: mission.montantMission.toFixed(2)
-            })));
-
-            XLSX.utils.book_append_sheet(wb, ws, 'Missions');
-            XLSX.writeFile(wb, 'missions.xlsx');
-        });
+        document.getElementById('reinitialiser').addEventListener('click', reinitialiserChamps);
     </script>
 </body>
 </html>
