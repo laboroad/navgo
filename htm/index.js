@@ -230,6 +230,7 @@ const competitors = [
     { latitude: 43.9515, longitude: 2.4379,  name: "Carrière d'Assac Vigroux" },
     { latitude: 43.7797,  longitude: 2.1813, name: "Carrière Réalmont Bessac" },
     { latitude: 43.5236,  longitude: 1.3833, name: "Carrière Portet Malet" },
+    { latitude: 43.7258,  longitude: 1.7729, name: "Carrière Agoarena" },
     { latitude: 43.2251,  longitude: 1.6130, name: "Carrière Lafarge Saverdun" }
 
 
