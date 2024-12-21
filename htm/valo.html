@@ -24,6 +24,16 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-section {
+            flex: 1;
+        }
+
+        .list-section {
+            flex: 1.5;
         }
 
         /* Titres */
@@ -53,8 +63,8 @@
         }
 
         .form-group input {
-            padding: 12px;
-            font-size: 16px;
+            padding: 8px;
+            font-size: 14px;
             border: 1px solid #ccc;
             border-radius: 8px;
             outline: none;
@@ -111,11 +121,18 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s;
-       
+        }
+
+        .mission-item button.edit-btn {
+            background-color: #f39c12;
         }
 
         .mission-item button:hover {
             background-color: #c0392b;
+        }
+
+        .mission-item button.edit-btn:hover {
+            background-color: #e67e22;
         }
 
         /* Section des Totaux */
@@ -159,90 +176,98 @@
         .reinitialiser-btn:hover {
             background-color: #e67e22;
         }
-/* Conteneur des boutons */
-    .button-container {
-        display: flex; /* Aligne les boutons horizontalement */
-        justify-content: space-between; /* Espace égal entre les boutons */
-        gap: 20px; /* Espace de 20px entre les boutons */
-        width: 100%; /* Prend toute la largeur disponible */
-        margin: 0; /* Supprime toute marge par défaut */
-    }
 
-    /* Éviter l'espacement supplémentaire sous les boutons */
-    .button-container + .form-group {
-        margin-top: 0; /* Supprime la marge en dessous des boutons */
-    }
+        /* Conteneur des boutons */
+        .button-container {
+            display: flex; /* Aligne les boutons horizontalement */
+            justify-content: space-between; /* Espace égal entre les boutons */
+            gap: 20px; /* Espace de 20px entre les boutons */
+            width: 100%; /* Prend toute la largeur disponible */
+            margin: 0; /* Supprime toute marge par défaut */
+        }
 
+        /* Éviter l'espacement supplémentaire sous les boutons */
+        .button-container + .form-group {
+            margin-top: 0; /* Supprime la marge en dessous des boutons */
+        }
     </style>
 </head>
 <body>
-  <div class="form-container">
-        <h1>Gestion des Missions Chauffeurs</h1>
-        <div class="form-group">
-            <label for="chauffeur-name">Chantier</label>
-            <input type="text" id="chauffeur-name" value="">
+    <div class="form-container">
+        <div class="form-section">
+            <h1>Journée chauffeur</h1>
+            <div class="form-group">
+                <label for="chauffeur-name">Chantier</label>
+                <input type="text" id="chauffeur-name" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="tours-prevus">Tours Prévu</label>
+                <input type="number" id="tours-prevus" value="1">
+            </div>
+
+            <div class="form-group">
+                <label for="temps-aller">Temps estimé pour aller (min)</label>
+                <input type="number" id="temps-aller" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="temps-retour">Temps de retour estimé (min)</label>
+                <input type="number" id="temps-retour" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="temps-chargement">Temps de chargement (min)</label>
+                <input type="number" id="temps-chargement" value="15">
+            </div>
+
+            <div class="form-group">
+                <label for="quantite-transportee">Quantité totale transportée (t)</label>
+                <input type="number" id="quantite-transportee" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="prix-transport">Prix transport (à la tonne)</label>
+                <input type="number" id="prix-transport" value="0">
+            </div>
+
+            <div class="form-group">
+                <div class="button-container">
+                    <button class="button" id="ajouter-mission">Ajouter Mission</button>
+                    <button class="reinitialiser-btn" id="reinitialiser">Réinitialiser</button>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="tours-prevus">Tours Prévu</label>
-            <input type="number" id="tours-prevus" value="1">
-        </div>
+        <div class="list-section">
+            <div class="mission-list">
+                <h2>Récapitulatif des Missions</h2>
+                <ul id="mission-list-ul"></ul>
+            </div>
 
-        <div class="form-group">
-            <label for="temps-aller">Temps estimé pour aller (min)</label>
-            <input type="number" id="temps-aller" value="0">
-        </div>
+            <div class="form-group">
+                <p id="resultat"></p>
+            </div>
 
-        <div class="form-group">
-            <label for="temps-retour">Temps de retour estimé (min)</label>
-            <input type="number" id="temps-retour" value="0">
-        </div>
+            <div class="form-group">
+                <p id="warning" class="error"></p>
+            </div>
 
-        <div class="form-group">
-            <label for="temps-chargement">Temps de chargement (min)</label>
-            <input type="number" id="temps-chargement" value="15">
-        </div>
-
-        <div class="form-group">
-            <label for="quantite-transportee">Quantité totale transportée (t)</label>
-            <input type="number" id="quantite-transportee" value="0">
-        </div>
-
-        <div class="form-group">
-            <label for="prix-transport">Prix transport (à la tonne)</label>
-            <input type="number" id="prix-transport" value="0">
-        </div>
-
-  <div class="form-group">
-    <div class="button-container">
-        <button class="button" id="ajouter-mission">Ajouter Mission</button>
-        <button class="reinitialiser-btn" id="reinitialiser">Réinitialiser</button>
-    </div>
+            <div class="total-container">
+                <h3>Total Général :</h3>
+                <p id="total-temps">Temps total : 0h 0min</p>
+                <p id="total-montant">Montant total : 0 €</p>
+                <p id="temps-restant">Temps restant : 8h 0min</p>
+            </div>
+<div class="form-group">
+    <button id="export-excel" class="button" style="float: right;">Exporter en Excel</button>
 </div>
-
-        <div class="mission-list">
-            <h2>Récapitulatif des Missions</h2>
-            <ul id="mission-list-ul"></ul>
-        </div>
-
-  <div class="form-group">
-            <p id="resultat"></p>
-        </div>
-
-        <div class="form-group">
-            <p id="warning" class="error"></p>
-        </div>
-
-        <div class="total-container">
-            <h3>Total Général :</h3>
-            <p id="total-temps">Temps total : 0h 0min</p>
-            <p id="total-montant">Montant total : 0 €</p>
-            <p id="temps-restant">Temps restant avant 8h : 8h 0min</p>
-        </div>
+ </div>
     </div>
 
     <script>
         let missions = [];
+        let missionEnCours = null;
 
         function reinitialiserChamps() {
             document.getElementById('chauffeur-name').value = '';
@@ -254,6 +279,7 @@
             document.getElementById('prix-transport').value = '0';
             document.getElementById('resultat').innerHTML = '';
             document.getElementById('warning').textContent = '';
+            missionEnCours = null; // Réinitialiser la mission en cours
         }
 
         function updateMissionList() {
@@ -265,6 +291,7 @@
                 li.classList.add('mission-item');
                 li.innerHTML = `
                     Chantier: ${mission.chauffeur} | Tours: ${mission.toursPrevus} | Temps total: ${mission.tempsTotal} min | Montant: ${mission.montantMission.toFixed(2)} €
+                    <button class="edit-btn" onclick="modifierMission(${index})">Modifier</button>
                     <button onclick="supprimerMission(${index})">Supprimer</button>
                 `;
                 missionListUl.appendChild(li);
@@ -288,19 +315,26 @@
             document.getElementById('total-montant').textContent = `Montant total : ${totalMontant.toFixed(2)} €`;
             document.getElementById('temps-restant').textContent = `Temps restant avant 8h : ${Math.floor(tempsRestant / 60)}h ${tempsRestant % 60}min`;
 
-            // Si dépassement des 8h ou montant supérieur à 680 €, mettre en rouge
-            if (totalTemps > tempsTotalRestant || totalMontant > 680) {
+            // Appliquer couleur rouge selon dépassement
+            if (totalTemps > tempsTotalRestant) {
                 document.getElementById('total-temps').classList.add('red');
-                document.getElementById('total-montant').classList.add('red');
-                document.getElementById('temps-restant').classList.add('red');
             } else {
                 document.getElementById('total-temps').classList.remove('red');
+            }
+
+            if (totalMontant > 680) {
+                document.getElementById('total-montant').classList.add('red');
+            } else {
                 document.getElementById('total-montant').classList.remove('red');
+            }
+
+            if (tempsRestant < 0) {
+                document.getElementById('temps-restant').classList.add('red');
+            } else {
                 document.getElementById('temps-restant').classList.remove('red');
             }
         }
 
-        // Ajouter une mission
         document.getElementById('ajouter-mission').addEventListener('click', function() {
             const chauffeurName = document.getElementById('chauffeur-name').value;
             const toursPrevus = parseInt(document.getElementById('tours-prevus').value);
@@ -313,32 +347,89 @@
             const tempsTotal = toursPrevus * (tempsAller + tempsRetour + tempsChargement);
             const montantMission = quantiteTransportee * prixTransport;
 
-            // Ajouter la mission à la liste
-            missions.push({
-                chauffeur: chauffeurName,
-                toursPrevus: toursPrevus,
-                tempsTotal: tempsTotal,
-                montantMission: montantMission
-            });
+            if (missionEnCours !== null) {
+                // Mise à jour d'une mission existante
+                missions[missionEnCours] = {
+                    chauffeur: chauffeurName,
+                    toursPrevus: toursPrevus,
+                    tempsTotal: tempsTotal,
+                    montantMission: montantMission
+                };
+                missionEnCours = null;
+            } else {
+                // Ajouter une nouvelle mission
+           missions.push({
+    chauffeur: chauffeurName,
+    toursPrevus: toursPrevus,
+    tempsAller: tempsAller,
+    tempsRetour: tempsRetour,
+    tempsChargement: tempsChargement,
+    quantiteTransportee: quantiteTransportee,
+    prixTransport: prixTransport,
+    tempsTotal: tempsTotal,
+    montantMission: montantMission
+});
 
-            // Réinitialiser les champs après ajout
+            }
+
             reinitialiserChamps();
-
-            // Mettre à jour la liste des missions
             updateMissionList();
         });
 
-        // Supprimer une mission
-        function supprimerMission(index) {
-            missions.splice(index, 1); 
-            updateMissionList();
+        function modifierMission(index) {
+            const mission = missions[index];
+            // Remplir tous les champs du formulaire avec les valeurs de la mission
+            document.getElementById('chauffeur-name').value = mission.chauffeur;
+            document.getElementById('tours-prevus').value = mission.toursPrevus;
+            document.getElementById('temps-aller').value = mission.tempsAller || 0;
+            document.getElementById('temps-retour').value = mission.tempsRetour || 0;
+            document.getElementById('temps-chargement').value = mission.tempsChargement || 15;
+            document.getElementById('quantite-transportee').value = mission.quantiteTransportee || 0;
+            document.getElementById('prix-transport').value = mission.prixTransport || 0;
+
+            // Enregistrer l'index de la mission en cours d'édition
+            missionEnCours = index;
         }
 
-        // Réinitialiser la liste
+        function supprimerMission(index) {
+            missions.splice(index, 1); // Supprime la mission de la liste
+            updateMissionList(); // Met à jour l'affichage
+        }
+
         document.getElementById('reinitialiser').addEventListener('click', function() {
-            missions = []; 
-            updateMissionList();
+            reinitialiserChamps();
         });
+
+
+document.getElementById('export-excel').addEventListener('click', function() {
+    // Créer un tableau pour les données à exporter
+    const data = missions.map(mission => [
+        mission.chauffeur, 
+        mission.toursPrevus, 
+        mission.tempsAller, 
+        mission.tempsRetour, 
+        mission.tempsChargement, 
+        mission.quantiteTransportee, 
+        mission.prixTransport, 
+        mission.tempsTotal, 
+        mission.montantMission.toFixed(2)
+    ]);
+
+    // Ajouter des en-têtes à notre tableau
+    const headers = ['Chantier', 'Tours Prévu', 'Temps Aller (min)', 'Temps Retour (min)', 'Temps Chargement (min)', 'Quantité Transportée (t)', 'Prix Transport (€/t)', 'Temps Total (min)', 'Montant (€)'];
+    data.unshift(headers);
+
+    // Créer un nouveau classeur Excel
+    const ws = XLSX.utils.aoa_to_sheet(data); // Convertir les données en feuille
+    const wb = XLSX.utils.book_new(); // Créer un classeur vide
+    XLSX.utils.book_append_sheet(wb, ws, 'Missions'); // Ajouter la feuille au classeur
+
+    // Exporter le fichier Excel
+    XLSX.writeFile(wb, 'Missions_Chauffeurs.xlsx');
+});
+
     </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 </html>
