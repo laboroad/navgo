@@ -6,7 +6,7 @@
     <title>Missions Chauffeurs</title>
     <link rel="icon" href="img/gdo.ico" type="image/x-icon">
     <style>
-        /* Général */
+        /* Styles restent inchangés */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7fc;
@@ -14,8 +14,6 @@
             margin: 0;
             padding: 0;
         }
-
-        /* Conteneur principal */
         .form-container {
             width: 80%;
             max-width: 1200px;
@@ -36,7 +34,6 @@
             flex: 1.5;
         }
 
-        /* Titres */
         h1, h2 {
             font-size: 24px;
             color: #333;
@@ -44,7 +41,6 @@
             text-align: center;
         }
 
-        /* Formulaire */
         .form-group {
             margin-bottom: 15px;
             display: flex;
@@ -96,7 +92,6 @@
             margin-top: 8px;
         }
 
-        /* Liste des missions */
         .mission-list {
             margin-top: 30px;
             border-top: 2px solid #ddd;
@@ -135,7 +130,6 @@
             background-color: #e67e22;
         }
 
-        /* Section des Totaux */
         .total-container {
             margin-top: 40px;
             padding: 20px;
@@ -161,7 +155,6 @@
             color: #e74c3c;
         }
 
-        /* Réinitialiser bouton */
         .reinitialiser-btn {
             background-color: #f39c12;
             color: white;
@@ -177,18 +170,11 @@
             background-color: #e67e22;
         }
 
-        /* Conteneur des boutons */
         .button-container {
-            display: flex; /* Aligne les boutons horizontalement */
-            justify-content: space-between; /* Espace égal entre les boutons */
-            gap: 20px; /* Espace de 20px entre les boutons */
-            width: 100%; /* Prend toute la largeur disponible */
-            margin: 0; /* Supprime toute marge par défaut */
-        }
-
-        /* Éviter l'espacement supplémentaire sous les boutons */
-        .button-container + .form-group {
-            margin-top: 0; /* Supprime la marge en dessous des boutons */
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
         }
     </style>
 </head>
@@ -259,11 +245,14 @@
                 <p id="total-montant">Montant total : 0 €</p>
                 <p id="temps-restant">Temps restant : 8h 0min</p>
             </div>
-<div class="form-group">
-    <button id="export-excel" class="button" style="float: right;">Exporter en Excel</button>
-</div>
- </div>
+
+            <div class="form-group">
+                <button id="export-excel" class="button" style="float: right;">Exporter en Excel</button>
+            </div>
+        </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
     <script>
         let missions = [];
@@ -279,7 +268,6 @@
             document.getElementById('prix-transport').value = '0';
             document.getElementById('resultat').innerHTML = '';
             document.getElementById('warning').textContent = '';
-            missionEnCours = null; // Réinitialiser la mission en cours
         }
 
         function updateMissionList() {
@@ -303,7 +291,7 @@
         function updateTotaux() {
             let totalTemps = 0;
             let totalMontant = 0;
-            let tempsTotalRestant = 480; // 8h en minutes
+            let tempsTotalRestant = 480;
 
             missions.forEach(mission => {
                 totalTemps += mission.tempsTotal;
@@ -315,7 +303,6 @@
             document.getElementById('total-montant').textContent = `Montant total : ${totalMontant.toFixed(2)} €`;
             document.getElementById('temps-restant').textContent = `Temps restant avant 8h : ${Math.floor(tempsRestant / 60)}h ${tempsRestant % 60}min`;
 
-            // Appliquer couleur rouge selon dépassement
             if (totalTemps > tempsTotalRestant) {
                 document.getElementById('total-temps').classList.add('red');
             } else {
@@ -358,18 +345,17 @@
                 missionEnCours = null;
             } else {
                 // Ajouter une nouvelle mission
-           missions.push({
-    chauffeur: chauffeurName,
-    toursPrevus: toursPrevus,
-    tempsAller: tempsAller,
-    tempsRetour: tempsRetour,
-    tempsChargement: tempsChargement,
-    quantiteTransportee: quantiteTransportee,
-    prixTransport: prixTransport,
-    tempsTotal: tempsTotal,
-    montantMission: montantMission
-});
-
+                missions.push({
+                    chauffeur: chauffeurName,
+                    toursPrevus: toursPrevus,
+                    tempsAller: tempsAller,
+                    tempsRetour: tempsRetour,
+                    tempsChargement: tempsChargement,
+                    quantiteTransportee: quantiteTransportee,
+                    prixTransport: prixTransport,
+                    tempsTotal: tempsTotal,
+                    montantMission: montantMission
+                });
             }
 
             reinitialiserChamps();
@@ -378,58 +364,38 @@
 
         function modifierMission(index) {
             const mission = missions[index];
-            // Remplir tous les champs du formulaire avec les valeurs de la mission
             document.getElementById('chauffeur-name').value = mission.chauffeur;
             document.getElementById('tours-prevus').value = mission.toursPrevus;
-            document.getElementById('temps-aller').value = mission.tempsAller || 0;
-            document.getElementById('temps-retour').value = mission.tempsRetour || 0;
-            document.getElementById('temps-chargement').value = mission.tempsChargement || 15;
-            document.getElementById('quantite-transportee').value = mission.quantiteTransportee || 0;
-            document.getElementById('prix-transport').value = mission.prixTransport || 0;
-
-            // Enregistrer l'index de la mission en cours d'édition
+            document.getElementById('temps-aller').value = mission.tempsAller;
+            document.getElementById('temps-retour').value = mission.tempsRetour;
+            document.getElementById('temps-chargement').value = mission.tempsChargement;
+            document.getElementById('quantite-transportee').value = mission.quantiteTransportee;
+            document.getElementById('prix-transport').value = mission.prixTransport;
             missionEnCours = index;
         }
 
         function supprimerMission(index) {
-            missions.splice(index, 1); // Supprime la mission de la liste
-            updateMissionList(); // Met à jour l'affichage
+            missions.splice(index, 1);
+            updateMissionList();
         }
 
         document.getElementById('reinitialiser').addEventListener('click', function() {
             reinitialiserChamps();
         });
 
+        // Fonction pour exporter en Excel
+        document.getElementById('export-excel').addEventListener('click', function() {
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(missions.map(mission => ({
+                Chauffeur: mission.chauffeur,
+                'Tours Prévu': mission.toursPrevus,
+                'Temps Total (min)': mission.tempsTotal,
+                Montant: mission.montantMission.toFixed(2)
+            })));
 
-document.getElementById('export-excel').addEventListener('click', function() {
-    // Créer un tableau pour les données à exporter
-    const data = missions.map(mission => [
-        mission.chauffeur, 
-        mission.toursPrevus, 
-        mission.tempsAller, 
-        mission.tempsRetour, 
-        mission.tempsChargement, 
-        mission.quantiteTransportee, 
-        mission.prixTransport, 
-        mission.tempsTotal, 
-        mission.montantMission.toFixed(2)
-    ]);
-
-    // Ajouter des en-têtes à notre tableau
-    const headers = ['Chantier', 'Tours Prévu', 'Temps Aller (min)', 'Temps Retour (min)', 'Temps Chargement (min)', 'Quantité Transportée (t)', 'Prix Transport (€/t)', 'Temps Total (min)', 'Montant (€)'];
-    data.unshift(headers);
-
-    // Créer un nouveau classeur Excel
-    const ws = XLSX.utils.aoa_to_sheet(data); // Convertir les données en feuille
-    const wb = XLSX.utils.book_new(); // Créer un classeur vide
-    XLSX.utils.book_append_sheet(wb, ws, 'Missions'); // Ajouter la feuille au classeur
-
-    // Exporter le fichier Excel
-    XLSX.writeFile(wb, 'Missions_Chauffeurs.xlsx');
-});
-
+            XLSX.utils.book_append_sheet(wb, ws, 'Missions');
+            XLSX.writeFile(wb, 'missions.xlsx');
+        });
     </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 </html>
