@@ -445,6 +445,7 @@ libelleSelect.addEventListener("change", () => {
     const site = siteSelect.value;
     const segment = segmentSelect.value;
     const libelle = libelleSelect.value;
+   const footerText = document.getElementById('footer-text');
 
     const produit = produits.find(p => p.site === site && p.segment === segment && p.libelle === libelle);
 
@@ -461,5 +462,8 @@ libelleSelect.addEventListener("change", () => {
             </tr>
         `;
         detailsTable.style.display = "table";
+       
+        footerText.innerHTML = '<p>* Le tarif de base inclus la contribution énergie de 0.12€ HT</p><p>** Les prix annoncés sont au départ du site et non remisables.</p>';
+        footerText.style.display = 'block';
     }
 });
