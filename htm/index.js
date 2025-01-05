@@ -299,6 +299,12 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
  // Ajouter un événement au bouton de mise à jour pour géocoder la ville et calculer la distance et le temps
 
 document.getElementById("updateButton").addEventListener("click", function() {
+
+// Remet à vide ou remplacez par une valeur par défaut
+    document.getElementById('quantitelivre').value = ''; 
+    // Vous pouvez aussi effectuer d'autres mises à jour si nécessaire
+    const label = document.getElementById('quantite-label');
+    label.textContent = "Quantité Livrée"; // Réinitialiser le label
 //remonte les résultats
  // Faire défiler jusqu'aux résultats après l'envoi
         document.getElementById('resultats').scrollIntoView({
