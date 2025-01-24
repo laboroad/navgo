@@ -231,6 +231,11 @@ const competitors = [
     { latitude: 43.7797,  longitude: 2.1813, name: "Carrière Réalmont Bessac" },
     { latitude: 43.5236,  longitude: 1.3833, name: "Carrière Portet Malet" },
     { latitude: 43.7258,  longitude: 1.7729, name: "Carrière Agoarena" },
+    { latitude: 44.1186,  longitude: 1.6315, name: "Carrière Lafarge Montricoux" },
+    { latitude: 44.2246,  longitude: 1.7030, name: "Carrière Caylus MGM" },
+    { latitude: 44.1170,  longitude: 2.3158, name: "Carrière Tanus Delisle" },
+    { latitude: 43.4430,  longitude: 2.0822, name: "Carrière Soreze Cemex" },
+    { latitude: 43.4743,  longitude: 2.1397, name: "Carrière Dourgne CMN" },
     { latitude: 43.2251,  longitude: 1.6130, name: "Carrière Lafarge Saverdun" }
 
 
