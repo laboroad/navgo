@@ -228,15 +228,15 @@ const competitors = [
     { latitude: 43.7650, longitude: 2.2621,  name: "Carrière Peyrebrune Colas" },
     { latitude: 43.9023, longitude: 2.1293,  name: "Carrière d'Albi Cemex" },
     { latitude: 43.9515, longitude: 2.4379,  name: "Carrière d'Assac Vigroux" },
-    { latitude: 43.7797,  longitude: 2.1813, name: "Carrière Réalmont Bessac" },
-    { latitude: 43.5236,  longitude: 1.3833, name: "Carrière Portet Malet" },
-    { latitude: 43.7258,  longitude: 1.7729, name: "Carrière Agoarena" },
-    { latitude: 44.1186,  longitude: 1.6315, name: "Carrière Lafarge Montricoux" },
-    { latitude: 44.2246,  longitude: 1.7030, name: "Carrière Caylus MGM" },
-    { latitude: 44.1170,  longitude: 2.3158, name: "Carrière Tanus Delisle" },
-    { latitude: 43.4430,  longitude: 2.0822, name: "Carrière Soreze Cemex" },
-    { latitude: 43.4743,  longitude: 2.1397, name: "Carrière Dourgne CMN" },
-    { latitude: 43.2251,  longitude: 1.6130, name: "Carrière Lafarge Saverdun" }
+    { latitude: 43.7797, longitude: 2.1813, name: "Carrière Réalmont Bessac" },
+    { latitude: 43.5236, longitude: 1.3833, name: "Carrière Portet Malet" },
+    { latitude: 43.7258, longitude: 1.7729, name: "Carrière Agoarena" },
+    { latitude: 44.1186, longitude: 1.6315, name: "Carrière Lafarge Montricoux" },
+    { latitude: 44.2246, longitude: 1.7030, name: "Carrière Caylus MGM" },
+    { latitude: 44.1170, longitude: 2.3158, name: "Carrière Tanus Delisle" },
+    { latitude: 43.4430, longitude: 2.0822, name: "Carrière Soreze Cemex" },
+    { latitude: 43.4743, longitude: 2.1397, name: "Carrière Dourgne CMN" },
+    { latitude: 43.2251, longitude: 1.6130, name: "Carrière Lafarge Saverdun" }
 
 
 ];
@@ -318,21 +318,26 @@ document.getElementById("updateButton").addEventListener("click", function() {
         });
 
 
-    const cityInput = document.getElementById("cityInput").value.trim(); // Enlève les espaces inutiles
-    const selectedSite = document.getElementById("siteSelect").value;
+const cityInput = document.getElementById("cityInput").value.trim(); // Enlève les espaces inutiles
+const siteSelect = document.getElementById("siteSelect");
+const selectedSite = siteSelect.value;
+const selectedGroup = siteSelect.options[siteSelect.selectedIndex].getAttribute("data-group");
 
-    // Vérifie si un site est sélectionné et si la ville est saisie
-    if (selectedSite !== "Sélectionnez un site" && cityInput) {
-        // Obtenir les coordonnées du site sélectionné
-        const siteCoordinates = sites.find(site => site.site === selectedSite);
-        
-        // Vérifiez si les coordonnées du site existent
-        if (siteCoordinates) {
-            const sitePosition = [siteCoordinates.longitude, siteCoordinates.latitude];
+// Vérifie si un site est sélectionné et si la ville est saisie
+if (selectedSite !== "Sélectionnez un site" && cityInput) {
+    let siteCoordinates;
 
-            // Affichage des coordonnées pour le débogage
-            console.log("Coordonnées de depart site:", sitePosition);
-            
+    if (selectedGroup === "internal") {
+        // Recherche dans les sites internes
+        siteCoordinates = sites.find(site => site.site === selectedSite);
+    } else if (selectedGroup === "external") {
+        // Recherche dans les sites externes
+        siteCoordinates = competitors.find(site => site.name === selectedSite);
+    }
+
+    // Vérifiez si les coordonnées du site existent
+    if (siteCoordinates) {
+        const sitePosition = [siteCoordinates.longitude, siteCoordinates.latitude];
 
             // Appeler la fonction pour géocoder la ville
             geocodeCity(cityInput)
@@ -354,7 +359,7 @@ document.getElementById("updateButton").addEventListener("click", function() {
         // Centrer la carte et zoomer
         map.flyTo({
             center: [lng, lat], // Centre sur les coordonnées
-            zoom: 11, // Niveau de zoom (ajustez selon vos besoins)
+            zoom: 9, // Niveau de zoom (ajustez selon vos besoins)
             essential: true // Utilisez un vol essentiel pour des performances optimales
         });
     } else {

@@ -18,8 +18,6 @@
 
 <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWWKCNJJV7"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-SWWKCNJJV7'); </script>
 
-
-
     <style>
         /* Styles généraux */
         body {
@@ -305,6 +303,17 @@
     width: 100%; /* S'assure que l'élément prend toute la largeur disponible */
     box-sizing: border-box; /* Inclut le padding dans la largeur totale */
 }
+  .horizontal-list {
+        display: flex; /* Utilise Flexbox pour aligner les éléments en ligne */
+        gap: 10px; /* Espace entre chaque option */
+        align-items: center; /* Aligne verticalement les labels et inputs */
+    }
+
+    .horizontal-list label {
+        display: flex;
+        align-items: center; /* Aligne les textes avec les inputs */
+        gap: 5px; /* Ajoute un espace entre la case radio et le texte */
+    }
 
     </style>
 </head>
@@ -335,16 +344,39 @@
 <!-- Listbox pour les sites des marqueurs verts -->
 	<select id="siteSelect">
     <option value="Sélectionnez un site">Sélectionnez un site</option>
-	<option value="Albi">Albi</option>
-	<option value="Carrière de Brens">Brens</option>
-	<option value="Gagnac">Gagnac</option>
-	<option value="Gradilles">Gradilles</option>
-	<option value="isle-sur-Tarn">Lisle-sur-Tarn</option>
-	<option value="Ondes">Ondes</option>
-	<option value="Paulinet">Paulinet</option>
-	<option value="Sablière de Lexos">Sablière de Lexos</option>
-	<option value="Verdun">Verdun</option>
-	<option value="Villeneuve-sur-Vère">Villeneuve-sur-Vère</option>
+
+<!-- Groupe des sites internes -->
+    <optgroup label="Sites Internes">
+	<option value="Albi" data-group="internal">Albi</option>
+	<option value="Carrière de Brens" data-group="internal">Brens</option>
+	<option value="Gagnac" data-group="internal">Gagnac</option>
+	<option value="Gradilles" data-group="internal">Gradilles</option>
+	<option value="isle-sur-Tarn" data-group="internal">Lisle-sur-Tarn</option>
+	<option value="Ondes" data-group="internal">Ondes</option>
+	<option value="Paulinet" data-group="internal">Paulinet</option>
+	<option value="Sablière de Lexos" data-group="internal">Sablière de Lexos</option>
+	<option value="Verdun" data-group="internal">Verdun</option>
+	<option value="Villeneuve-sur-Vère" data-group="internal">Villeneuve-sur-Vère</option>
+</optgroup>
+    
+    <!-- Groupe des sites externes -->
+    <optgroup label="Sites Externes">
+        <option value="Carrière Castelnau MGM" data-group="external">Carrière Castelnau MGM</option>
+        <option value="Carrière Laguépie Eiffage" data-group="external">Carrière Laguépie Eiffage</option>
+        <option value="Carrière Peyrebrune Colas" data-group="external">Carrière Peyrebrune Colas</option>
+        <option value="Carrière d'Albi Cemex" data-group="external">Carrière d'Albi Cemex</option>
+        <option value="Carrière d'Assac Vigroux" data-group="external">Carrière d'Assac Vigroux</option>
+        <option value="Carrière Réalmont Bessac" data-group="external">Carrière Réalmont Bessac</option>
+        <option value="Carrière Portet Malet" data-group="external">Carrière Portet Malet</option>
+        <option value="Carrière Agoarena" data-group="external">Carrière Agoarena</option>
+        <option value="Carrière Lafarge Montricoux" data-group="external">Carrière Lafarge Montricoux</option>
+        <option value="Carrière Caylus MGM" data-group="external">Carrière Caylus MGM</option>
+        <option value="Carrière Tanus Delisle" data-group="external">Carrière Tanus Delisle</option>
+        <option value="Carrière Soreze Cemex" data-group="external">Carrière Soreze Cemex</option>
+        <option value="Carrière Dourgne CMN" data-group="external">Carrière Dourgne CMN</option>
+        <option value="Carrière Lafarge Saverdun" data-group="external">Carrière Lafarge Saverdun</option>
+    </optgroup>
+
 </select>
             <!-- Champ de recherche pour la ville
 <div id="cityInput" style="position: relative; width: 100%; max-width: 100%; margin: auto;"></div>-->
@@ -356,13 +388,20 @@
 </div>
  <!-- erreur -->
 <div id="error-message" style="color: red; display: none;"></div>
-  <div id="cadre1">
-                <label>Camions:</label>
-                <div class="horizontal-list">
-         <label><input id="30t" name="poids" type="radio" checked="checked" onclick="updateValues()"> 30t (semi)</label>
-        <label><input id="16t" name="poids" type="radio" onclick="updateValues()"> 16t (8x4)</label>
-        <label><input id="13t" name="poids" type="radio" onclick="updateValues()"> 13t (6x4)</label>
- </div>
+ 
+<div id="cadre1">
+    <span>Camions:</span>
+    <div class="horizontal-list">
+        <label for="30t">
+            <input id="30t" name="poids" type="radio" checked="checked" onclick="updateValues()"> 30t (semi)
+        </label>
+        <label for="16t">
+            <input id="16t" name="poids" type="radio" onclick="updateValues()"> 16t (8x4)
+        </label>
+        <label for="13t">
+            <input id="13t" name="poids" type="radio" onclick="updateValues()"> 13t (6x4)
+        </label>
+    </div>
 </div>
 <div id="cadre2">
     <div class="input-group">
