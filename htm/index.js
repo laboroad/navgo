@@ -39,7 +39,6 @@ var geoControl = new mapboxgl.GeolocateControl({
 map.addControl(geoControl);
 
 // Obtenir une isochrone pour une position donnée et renvoyer le GeoJSON
-// Obtenir une isochrone pour une position donnée et renvoyer le GeoJSON
 const getIso = function (position) {
     // Récupérer la sélection du profil de transport
     const profileSelect = document.getElementById("profile-select");
@@ -272,7 +271,7 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
     originPoint.on("dragend", onDragEndA);
 
     // Fonction pour géocoder l'entrée de la ville
-    const geocodeCity = function(city) {
+const geocodeCity = function(city) {
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(city)}.json?country=FR&proximity=1.4442,43.6045&bbox=1.0012,42.2429,4.8449,45.0042&access_token=${mapboxgl.accessToken}`;
 
     return fetch(geocodeUrl)
@@ -284,10 +283,24 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
         })
         .then(data => {
             if (data.features.length > 0) {
-                const { center } = data.features[0];
-                isoAppData.origins.a = center;
-                originPoint.setLngLat(center);
-                renderIso();
+                // Liste des départements autorisés
+                const allowedDepartments = ["Haute-Garonne", "Tarn", "Tarn-et-Garonne"];
+
+                // Filtrer les résultats pour ne garder que ceux des départements souhaités
+                const filteredResults = data.features.filter(feature => {
+                    return feature.context && feature.context.some(c => 
+                        allowedDepartments.includes(c.text)
+                    );
+                });
+
+                if (filteredResults.length > 0) {
+                    const { center } = filteredResults[0]; // Prendre le premier résultat filtré
+                    isoAppData.origins.a = center;
+                    originPoint.setLngLat(center);
+                    renderIso();
+                } else {
+                    console.error("Aucune ville trouvée dans les départements spécifiés.");
+                }
             } else {
                 console.error("No geocode data found for the city.");
             }
@@ -296,6 +309,7 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
             console.error("Error in geocoding:", error);
         });
 };
+
 
 
 
