@@ -235,7 +235,8 @@ const competitors = [
     { latitude: 44.1170, longitude: 2.3158, name: "Carrière Tanus Delisle" },
     { latitude: 43.4430, longitude: 2.0822, name: "Carrière Soreze Cemex" },
     { latitude: 43.4743, longitude: 2.1397, name: "Carrière Dourgne CMN" },
-    { latitude: 43.2251, longitude: 1.6130, name: "Carrière Lafarge Saverdun" }
+    { latitude: 43.4743, longitude: 2.1397, name: "Carrière Dourgne CMN" },
+    { latitude: 43.0684, longitude: 1.6407, name: "CMGO Varilhes" }
 
 
 ];
