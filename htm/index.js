@@ -586,10 +586,10 @@ const coutParTonneBascule = (prixTransportParJour * joursPourLivraison) /  quant
 // Met à jour la valeur dans l'input forfait
 const inputField = document.getElementById("forfaitoneshot");
 inputField.value = forfaitTonneBasculeV.toFixed(2);
-// Ajoute la logique pour vérifier la valeur et si livraison inferieur à 65 € applique 65€
+// Ajoute la logique pour vérifier la valeur et si livraison inferieur à 80 € applique 80€
 const labelField = document.getElementById("forfait-label");
-if (forfaitTonneBasculeV < 65) {
-inputField.value = 65;
+if (forfaitTonneBasculeV < 80) {
+inputField.value = 80;
 } else {
     // Styles par défaut si la valeur est correcte
 inputField.value = forfaitTonneBasculeV.toFixed(2);
