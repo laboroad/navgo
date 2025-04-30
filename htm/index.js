@@ -301,18 +301,44 @@ const geocodeCity = function(city) {
                     originPoint.setLngLat(center);
                     renderIso();
                 } else {
-                    console.error("Aucune ville trouvée dans les départements spécifiés.");
+                   showError("Aucune ville trouvée dans les départements autorisés (31, 81, 82).");
+
                 }
             } else {
-                console.error("No geocode data found for the city.");
+               showError("Aucune correspondance trouvée pour cette ville.");
+
             }
         })
         .catch(error => {
             console.error("Error in geocoding:", error);
         });
 };
+// Événement du bouton "Go" pour rechercher une ville
+document.getElementById("searchButton").addEventListener("click", function () {
+    const searchValue = document.getElementById("search").value.trim();
+    if (searchValue) {
+        geocodeCity(searchValue);
+    }
+});
+
+// (optionnel) Appuyer sur Entrée dans le champ lance aussi la recherche
+document.getElementById("search").addEventListener("keyup", function (e) {
+    if (e.key === "Enter") {
+        document.getElementById("searchButton").click();
+    }
+});
 
 
+
+function showError(message) {
+    const errorMessage = document.getElementById("error-message");
+    errorMessage.innerText = message;
+    errorMessage.style.display = "block";
+    errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+        errorMessage.style.display = "none";
+    }, 10000);
+}
 
 
 

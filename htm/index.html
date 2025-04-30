@@ -313,7 +313,37 @@
         display: flex;
         align-items: center; /* Aligne les textes avec les inputs */
         gap: 5px; /* Ajoute un espace entre la case radio et le texte */
-    }
+  }
+
+
+  .search-container {
+            position: absolute;
+            top: 10px;
+            left: 5%;  //50 au milieu
+            transform: translateX(-50%);
+            z-index: 9999;
+            background-color: white;
+            border-radius: 5px;
+            padding: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #search {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        #searchButton {
+            padding: 6px 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -321,6 +351,13 @@
 <body
     <div class='container'>
         <div class='map' id='map'>
+
+<div class="search-container">
+    <input type="text" id="search" placeholder="Rechercher...">
+    <button id="searchButton">Go</button>
+</div>
+<div id="error-message" style="display:none; color: red; font-weight: bold; text-align: center; margin-top: 10px;"></div>
+
 
 
   <!-- Bouton rouge qui redirige vers la page price.html -->
