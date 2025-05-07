@@ -303,6 +303,12 @@ const filteredResults = data.features.filter(feature => {
                     const { center } = filteredResults[0]; // Prendre le premier résultat filtré
                     isoAppData.origins.a = center;
                     originPoint.setLngLat(center);
+
+ 		 map.flyTo({ // survol de la carte par GO
+       		 center: center,
+      		  zoom: 10,
+     		   essential: true
+  		  });
                     renderIso();
                 } else {
                    showError("Aucune ville trouvée dans les départements autorisés (31, 32, 81, 82).");
@@ -322,6 +328,10 @@ document.getElementById("searchButton").addEventListener("click", function () {
     const searchValue = document.getElementById("search").value.trim();
     if (searchValue) {
         geocodeCity(searchValue);
+
+
+
+
     }
 });
 
