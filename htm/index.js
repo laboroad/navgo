@@ -274,7 +274,8 @@ addCompetitorMarkers(competitors);   // Marqueurs de concurrence (oranges)
 
     // Fonction pour géocoder l'entrée de la ville
 const geocodeCity = function(city) {
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(city)}.json?country=FR&proximity=1.4442,43.6045&bbox=1.0012,42.2429,4.8449,45.0042&access_token=${mapboxgl.accessToken}`;
+  //  const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(city)}.json?country=FR&proximity=1.4442,43.6045&bbox=1.0012,42.2429,4.8449,45.0042&access_token=${mapboxgl.accessToken}`;
+const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(city)}.json?country=FR&proximity=1.4442,43.6045&access_token=${mapboxgl.accessToken}`;
 
     return fetch(geocodeUrl)
         .then(res => {
@@ -286,14 +287,17 @@ const geocodeCity = function(city) {
         .then(data => {
             if (data.features.length > 0) {
                 // Liste des départements autorisés
-                const allowedDepartments = ["Gers","Haute-Garonne", "Tarn", "Tarn-et-Garonne"];
+               // const allowedDepartments = ["Gers","Haute-Garonne", "Tarn", "Tarn-et-Garonne"];
 
-                // Filtrer les résultats pour ne garder que ceux des départements souhaités
-                const filteredResults = data.features.filter(feature => {
-                    return feature.context && feature.context.some(c => 
-                        allowedDepartments.includes(c.text)
-                    );
-                });
+const allowedDepartments = ["32", "31", "81", "82"];
+const filteredResults = data.features.filter(feature => {
+    return feature.context && feature.context.some(c => {
+        return c.id.startsWith("region.") || c.id.startsWith("district.") || c.id.startsWith("place.")
+            ? allowedDepartments.includes(c.short_code?.split("-")[1])
+            : false;
+    });
+});
+
 
                 if (filteredResults.length > 0) {
                     const { center } = filteredResults[0]; // Prendre le premier résultat filtré
