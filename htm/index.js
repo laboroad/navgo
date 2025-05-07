@@ -286,7 +286,7 @@ const geocodeCity = function(city) {
         .then(data => {
             if (data.features.length > 0) {
                 // Liste des départements autorisés
-                const allowedDepartments = ["Haute-Garonne", "Tarn", "Tarn-et-Garonne"];
+                const allowedDepartments = ["Gers","Haute-Garonne", "Tarn", "Tarn-et-Garonne"];
 
                 // Filtrer les résultats pour ne garder que ceux des départements souhaités
                 const filteredResults = data.features.filter(feature => {
@@ -301,7 +301,7 @@ const geocodeCity = function(city) {
                     originPoint.setLngLat(center);
                     renderIso();
                 } else {
-                   showError("Aucune ville trouvée dans les départements autorisés (31, 81, 82).");
+                   showError("Aucune ville trouvée dans les départements autorisés (31, 32, 81, 82).");
 
                 }
             } else {
