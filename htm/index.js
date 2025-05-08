@@ -4,9 +4,16 @@ mapboxgl.accessToken = "pk.eyJ1IjoibGFib3JvYWQiLCJhIjoiY202eXZieW5sMGtrbjJqczF4c
 // Initialiser la carte
 const map = new mapboxgl.Map({
     container: "map",
-    style: "mapbox://styles/mapbox/traffic-day-v2",
+    style: "mapbox://styles/mapbox/streets-v11",    // style: "mapbox://styles/mapbox/traffic-day-v2",  //"mapbox://styles/mapbox/streets-v11", 
     center: [1.5659361596150514, 43.716215961673356],
-    zoom: 8.5
+   zoom: 8.5,
+   minZoom: 6,
+   maxZoom: 10,
+  maxBounds: [
+  [0.4, 42.4],  // Sud-Ouest (près de la frontière espagnole)
+  [3.2, 44.5]   // Nord-Est (jusqu’à l’Aveyron environ)
+  ]
+
 });
 
 
@@ -14,7 +21,7 @@ const map = new mapboxgl.Map({
 const isoAppData = {
     params: {
         urlBase: "https://api.mapbox.com/isochrone/v1/mapbox/",
-        profile: "driving-traffic/",
+        profile: "driving", // profile: "driving-traffic/",
         minutes: 15,
         vehicle_weight: 30000 // poids en kilogrammes (30 tonnes)
     },
@@ -306,7 +313,7 @@ const filteredResults = data.features.filter(feature => {
 
  		 map.flyTo({ // survol de la carte par GO
        		 center: center,
-      		  zoom: 10,
+      		  zoom: 8.5, ///Zoom
      		   essential: true
   		  });
                     renderIso();
@@ -328,10 +335,6 @@ document.getElementById("searchButton").addEventListener("click", function () {
     const searchValue = document.getElementById("search").value.trim();
     if (searchValue) {
         geocodeCity(searchValue);
-
-
-
-
     }
 });
 
@@ -353,8 +356,6 @@ function showError(message) {
         errorMessage.style.display = "none";
     }, 10000);
 }
-
-
 
     // Ajouter un événement au bouton de mise à jour pour géocoder la ville et calculer la distance et le temps
  // Ajouter un événement au bouton de mise à jour pour géocoder la ville et calculer la distance et le temps
