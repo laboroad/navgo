@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<item>
-  <!-- Version de ton application -->
-  <version>1.0.1.0</version>
+<rss version="2.0"
+     xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>EcoSplit Updates</title>
+    <link>https://laboroad.github.io/navgo/</link>
+    <description>Latest updates</description>
+    <language>en</language>
 
-  <!-- URL de l'EXE à télécharger -->
-  <url>https://laboroad.github.io/navgo/Ecosplit_10_0_1_0.exe</url>
-
-  <!-- Date de publication (facultative) -->
-  <pubDate>2026-01-10</pubDate>
-
-  <!-- Notes de la version (facultatif) -->
-  <releaseNotesLink>https://laboroad.github.io/navgo/release_notes_1_0_1.html</releaseNotesLink>
-
-  <!-- Description de la mise à jour (facultatif) -->
-  <description>Correction de bugs et mise à jour des fonctionnalités CSV/Excel.</description>
-
-  <!-- Signature (facultatif, si tu utilises vérification) -->
-  <!-- <signature>abcdef1234567890</signature> -->
-</item>
+    <item>
+      <title>v1.1</title>
+      <sparkle:releaseNotesLink>
+        https://laboroad.github.io/navgo/release-notes-1.1.html
+      </sparkle:releaseNotesLink>
+      <pubDate>Fri, 10 Jan 2026 12:00:00 +0000</pubDate>
+      <enclosure url="https://laboroad.github.io/navgo/EcoSplitSetup-1.1.exe"
+                 sparkle:version="1.1.0.0"
+                 sparkle:os="win"
+                 length="12345678"
+                 type="application/octet-stream" />
+    </item>
+  </channel>
+</rss>
