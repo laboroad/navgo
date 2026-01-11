@@ -1,202 +1,324 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="img/gdo.ico" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur d'Acceptabilité des Déchets</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e9ecef;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 900px;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
-            margin: auto;
-        }
-        h2 {
-            text-align: center;
-            color: #007BFF;
-            margin-bottom: 20px;
-        }
-        h3 {
-            color: #333;
-            border-bottom: 2px solid #007BFF;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: bold;
-            width: 45%;
-            color: #555;
-        }
-        input {
-            width: 50%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border 0.3s;
-        }
-        input:focus {
-            border: 1px solid #007BFF;
-            outline: none;
-        }
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            border-radius: 6px;
-        }
-        .valid { background-color: #28a745; color: white; }
-        .warning { background-color: #ffc107; color: white; }
-        .danger { background-color: #dc3545; color: white; }
-        button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        @media (max-width: 600px) {
-            .form-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            label, input {
-                width: 100%;
-            }
-            input {
-                margin-top: 5px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>CSV → Excel Ecominéro</title>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+/* ----------------- BODY ----------------- */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #f4f6f8, #e0f7fa);
+    color: #333;
+    padding: 40px;
+}
+
+/* ----------------- CONTAINER ----------------- */
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* ----------------- TITRE ----------------- */
+h2 {
+    color: #00796b;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ----------------- INPUT FILE ----------------- */
+input[type="file"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #b0bec5;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* ----------------- BOUTON ----------------- */
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 30px;
+    background: linear-gradient(90deg, #00796b, #26a69a);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #004d40, #00796b);
+    transform: translateY(-3px);
+}
+
+/* ----------------- PROGRESS BAR ----------------- */
+.progress-container {
+    position: relative;
+    height: 25px;
+    background: #eceff1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+progress {
+    width: 100%;
+    height: 25px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #eceff1;
+    border-radius: 12px;
+}
+
+progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #26a69a, #00796b);
+    border-radius: 12px;
+    transition: width 0.2s ease;
+}
+
+#progressText {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #004d40;
+}
+.warning-text {
+    font-size: 0.9rem;      /* un peu plus petit que le texte normal */
+    color: #d32f2f;         /* rouge discret */
+    text-align: center;      /* centré sous le titre */
+    margin-top: -10px;       /* optionnel : pour rapprocher du titre */
+    font-weight: normal;     /* pas en gras */
+}
+
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h2>Simulateur d'Acceptabilité des Déchets</h2>
-        <h3>Paramètres Généraux</h3>
-        <div class="form-group"><label for="cot">COT (mg/kg)</label><input type="number" id="cot" step="0.01"></div>
-        <div class="form-group"><label for="ph">pH (KCl)</label><input type="number" id="ph" step="0.01"></div>
-        <h3>Métaux Lourds</h3>
-        <div class="form-group"><label for="arsenic">Arsenic (mg/kg)</label><input type="number" id="arsenic" step="0.01"></div>
-        <div class="form-group"><label for="plomb">Plomb (mg/kg)</label><input type="number" id="plomb" step="0.01"></div>
-        <div class="form-group"><label for="mercure">Mercure (mg/kg)</label><input type="number" id="mercure" step="0.01"></div>
-        <div class="form-group"><label for="cadmium">Cadmium (mg/kg)</label><input type="number" id="cadmium" step="0.01"></div>
-        <div class="form-group"><label for="chrome">Chrome (mg/kg)</label><input type="number" id="chrome" step="0.01"></div>
-        <div class="form-group"><label for="nickel">Nickel (mg/kg)</label><input type="number" id="nickel" step="0.01"></div>
-        <div class="form-group"><label for="zinc">Zinc (mg/kg)</label><input type="number" id="zinc" step="0.01"></div>
-        <h3>Hydrocarbures Aromatiques Polycycliques (HAP)</h3>
-        <div class="form-group"><label for="naphtalene">Naphtalène (mg/kg)</label><input type="number" id="naphtalene" step="0.01"></div>
-        <div class="form-group"><label for="fluoranthene">Fluoranthène (mg/kg)</label><input type="number" id="fluoranthene" step="0.01"></div>
-        <div class="form-group"><label for="pyrene">Pyrène (mg/kg)</label><input type="number" id="pyrene" step="0.01"></div>
-        <h3>Polychlorobiphényles (PCB)</h3>
-        <div class="form-group"><label for="pcb">PCB Totaux (µg/kg)</label><input type="number" id="pcb" step="0.01"></div>
-        <h3>Hydrocarbures Totaux</h3>
-        <div class="form-group"><label for="hydrocarbures">Hydrocarbures Totaux C10-C40 (mg/kg)</label><input type="number" id="hydrocarbures" step="0.01"></div>
-        <h3>Lixiviation</h3>
-        <div class="form-group"><label for="lixiviation">Lixiviation 24h (mg/kg)</label><input type="number" id="lixiviation" step="0.01"></div>
-        <div class="form-group"><label for="chlorures">Chlorures (mg/kg)</label><input type="number" id="chlorures" step="0.01"></div>
-        <div class="form-group"><label for="fluorures">Fluorures (mg/kg)</label><input type="number" id="fluorures" step="0.01"></div>
-        <div class="form-group"><label for="sulfates">Sulfates (mg/kg)</label><input type="number" id="sulfates" step="0.01"></div>
-        <div class="form-group"><label for="phenols">Indice Phénols (mg/kg)</label><input type="number" id="phenols" step="0.01"></div>
-        <button onclick="validerAnalyse()">Valider</button>
-        <div id="result" class="result"></div>
+<div class="container">
+    <h2>Générateur Excel Ecominéro</h2>
+	<p class="warning-text">⚠️ Ne pas ouvrir le fichier Carsabe, à insérer directement</p>
+    <input type="file" id="csvFile" accept=".csv">
+    <button onclick="processCSV()">Générer Excel</button>
+
+    <div class="progress-container">
+        <progress id="progressBar" value="0" max="100"></progress>
+        <div id="progressText">0%</div>
     </div>
-    <script>
-        function validerAnalyse() {
-            let seuilClasse3 = { 
-                cot: 30000, 
-                ph: { min: 6, max: 9 }, 
-                arsenic: 0.5, 
-                plomb: 0.5, 
-                mercure: 0.01, 
-                cadmium: 0.04, 
-                chrome: 0.5, 
-                nickel: 0.4, 
-                zinc: 4, 
-                lixiviation: 10, 
-                chlorures: 800, 
-                fluorures: 10, 
-                sulfates: 1000, 
-                phenols: 1 
-            };
-            
-            let seuilClasse2 = { 
-                cot: 50000, 
-                ph: { min: 6, max: 9 }, 
-                arsenic: 2, 
-                plomb: 10, 
-                mercure: 0.2, 
-                cadmium: 1, 
-                chrome: 10, 
-                nickel: 10, 
-                zinc: 50, 
-                lixiviation: 50, 
-                chlorures: 15000, 
-                fluorures: 150, 
-                sulfates: 20000, 
-                phenols: 10 
-            };
+</div>
 
-            let valeurs = {};
-            document.querySelectorAll('input').forEach(input => valeurs[input.id] = parseFloat(input.value) || 0);
-            let resultDiv = document.getElementById('result');
+<script>
+function removeAccents(s) {
+    return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+function cleanText(s) {
+    return removeAccents(s).toUpperCase().replace(/[-.]/g," ").replace(/\s+/g," ").trim();
+}
+function pad(n){ return n.toString().padStart(2,"0"); }
 
-            // Vérification du pH pour la classe 3
-            if (valeurs.ph < seuilClasse3.ph.min || valeurs.ph > seuilClasse3.ph.max) {
-                resultDiv.innerText = "Le pH doit être compris entre " + seuilClasse3.ph.min + " et " + seuilClasse3.ph.max + " pour être acceptable en ISDI (Classe 3).";
-                resultDiv.className = "result danger";
-                return;
+function processCSV() {
+    const f = document.getElementById("csvFile").files[0];
+    if (!f) { alert("Choisir un CSV"); return; }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+
+        const lines = e.target.result.split(/\r?\n/).filter(l=>l.trim());
+        const headersCsv = lines[0].split(";");
+        const col = {};
+        headersCsv.forEach((h,i)=>col[h.trim()]=i);
+
+        const headersFinal = [
+            "SIRET du site de réception des déchets",
+            "Nom d'usage du site de réception des déchets",
+            "N° BL (bon de livraison du déchet)",
+            "N° DAP",
+            "Type de chantier",
+            "Numéro de pesée",
+            "Date de réception du déchet",
+            "Code traitement",
+            "Qualification Traitement final",
+            "Code Européen de Dechet CED",
+            "Code Déchet Ecominéro",
+            "Dénomination déchet usuelle",
+            "Quantité de déchets",
+            "Unité de mesure",
+            "Adresse du chantier",
+            "Raison sociale de la société de travaux (expéditeur)",
+            "SIRET de la société de travaux (expéditeur)",
+            "Raison sociale de l'éco-organisme",
+            "SIREN de l'éco-organisme"
+        ];
+
+        const dictEco = {
+            "BETON NON FERRAILLE":"17010101",
+            "BETON FERRAILLE":"17010102",
+            "BRIQUES":"17010200",
+            "TUILES":"17010301",
+            "CERAMIQUE":"17010302",
+            "MELANGE INERTE HORS TERRE":"17010701",
+            "MELANGE INERTE AVEC TERRE":"17010702",
+            "MELANGES BITUMINEUX":"17030200"
+        };
+
+        const out = [headersFinal];
+
+        const dateKey = Object.keys(col).find(k=>k.toLowerCase().includes("date") && k.toLowerCase().includes("réception"));
+        const heureKey = Object.keys(col).find(k=>k.toLowerCase().includes("heure") && k.toLowerCase().includes("pesée"));
+        const cedKey = Object.keys(col).find(k=>k.toLowerCase().includes("code") && k.toLowerCase().includes("déchet"));
+
+        for (let i=1;i<lines.length;i++){
+            const r = lines[i].split(";");
+            const o = Array(19).fill("");
+
+            o[0]="30950596400044";
+            o[1]="Gagnac";
+            o[4]="B";
+
+            // Numéro pesée + BL
+            if (dateKey && heureKey) {
+                const d = new Date(r[col[dateKey]]+" "+r[col[heureKey]]);
+                if (!isNaN(d)) {
+                    const num = pad(d.getDate())+pad(d.getMonth()+1)+d.getFullYear()+pad(d.getHours())+pad(d.getMinutes());
+                    o[5]=num;
+                    o[2]="G-"+num;
+                }
             }
 
-            // Validation des seuils pour Classe 3
-            if (Object.keys(seuilClasse3).every(key => {
-                if (key === 'ph') {
-                    return valeurs.ph >= seuilClasse3.ph.min && valeurs.ph <= seuilClasse3.ph.max;
-                }
-                return valeurs[key] <= seuilClasse3[key];
-            })) {
-                resultDiv.innerText = "Déchets acceptables en ISDI (Classe 3)";
-                resultDiv.className = "result valid";
-            } 
-            // Validation des seuils pour Classe 2
-            else if (Object.keys(seuilClasse2).every(key => {
-                if (key === 'ph') {
-                    return valeurs.ph >= seuilClasse2.ph.min && valeurs.ph <= seuilClasse2.ph.max;
-                }
-                return valeurs[key] <= seuilClasse2[key];
-            })) {
-                resultDiv.innerText = "Déchets acceptables en ISDND (Classe 2)";
-                resultDiv.className = "result warning";
-            } 
-            else {
-                resultDiv.innerText = "Déchets dangereux (Non acceptables)";
-                resultDiv.className = "result danger";
+            // Date réception
+            if (dateKey && r[col[dateKey]]) {
+		const parts = r[col[dateKey]].split("-");
+		if (parts.length === 3) {
+        // Date réelle Excel
+        o[6] = new Date(parts[0], parts[1] - 1, parts[2]);
+		}
+		}
+
+            // Traitement
+            if (col["Code de traitement réalisé"]!==undefined) {
+                o[7]=r[col["Code de traitement réalisé"]];
+                o[8]="RECYCLAGE";
             }
+
+            // CED
+            if (cedKey) o[9]=r[col[cedKey]];
+
+            // Dénomination + code Eco
+            const deno = col["Dénomination du déchet"]!==undefined ? r[col["Dénomination du déchet"]] : "";
+            o[11]=deno;
+          // Code Déchet Ecominéro
+let eco = "00000000";
+
+// 1️⃣ priorité : valeur CSV si elle existe
+const ecoKey = Object.keys(col).find(k =>
+    k.toLowerCase().includes("code") &&
+    k.toLowerCase().includes("ecomin")
+);
+
+if (ecoKey && r[col[ecoKey]]?.trim()) {
+    eco = r[col[ecoKey]].trim();
+} else {
+    // 2️⃣ sinon calcul par dénomination (comme VB.NET)
+    const dclean = cleanText(deno);
+    for (const k in dictEco) {
+        if (dclean.includes(k)) {
+            eco = dictEco[k];
+            break;
         }
-    </script>
+    }
+
+    // 3️⃣ fallback VB.NET : MELANGE BITUMINEUX
+    if (eco === "00000000" && dclean.includes("MELANGE") && dclean.includes("BITUMINEUX")) {
+        eco = "17030200";
+    }
+}
+
+o[10] = eco;
+
+            // Quantité
+          if (col["Poids en tonnes"]!==undefined) {
+    let val = r[col["Poids en tonnes"]].replace(",", ".");
+    o[12] = parseFloat(val);  // nombre réel
+    o[13] = "T";
+}
+
+
+            // Adresse + DAP
+            if (col["Libellé de l'adresse du producteur initial"]!==undefined) {
+                const raw=r[col["Libellé de l'adresse du producteur initial"]];
+                const p=raw.split("_");
+                if (p.length>=3) o[3]=p[1];
+                let adr=p[0];
+                if (col["Commune du producteur initial"]!==undefined) adr+=" - "+r[col["Commune du producteur initial"]];
+                if (col["Code postal du producteur initial"]!==undefined) adr+=" - "+r[col["Code postal du producteur initial"]];
+                o[14]=adr;
+            }
+
+            // Expéditeur
+            if (col["Raison sociale de l'expéditeur OU du détenteur"]!==undefined)
+                o[15]=r[col["Raison sociale de l'expéditeur OU du détenteur"]];
+
+            if (col["Numéro d'identification de l'expéditeur OU du détenteur"]!==undefined) {
+                let s=r[col["Numéro d'identification de l'expéditeur OU du détenteur"]].replace(/[^\dEe.+-]/g,"");
+                if (s.toUpperCase().includes("E")) s=Number(s).toFixed(0);
+                o[16]=s;
+            }
+
+            o[17]="ÉCOMINÉRO";
+            o[18]="911870251";
+
+            out.push(o);
+
+            const pcent=Math.round((i/(lines.length-1))*100);
+            progressBar.value=pcent;
+            progressText.innerText=pcent+"%";
+			
+        }
+
+     const wb = XLSX.utils.book_new();
+const ws = XLSX.utils.aoa_to_sheet(out);
+
+// Format français pour la colonne Date réception (G)
+for (let r = 1; r < out.length; r++) {
+    const cell = ws["G" + (r + 1)];
+    if (cell && cell.v instanceof Date) {
+        cell.t = "d";
+        cell.z = "dd/mm/yyyy";
+    }
+}
+
+XLSX.utils.book_append_sheet(wb, ws, "Final");
+XLSX.writeFile(wb, "Fichier_Final.xlsx");
+
+
+progressText.innerText = "✅ Fichier créé dans votre dossier de téléchargements !";
+
+setTimeout(() => {
+    alert("Le fichier a été créé et se trouve dans votre dossier de téléchargements !");
+    // Rafraîchir la page
+    location.reload();
+}, 3000);
+
+    };
+
+    reader.readAsText(f,"UTF-8");
+}
+</script>
+
 </body>
 </html>
